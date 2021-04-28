@@ -4,6 +4,11 @@ SUPPLIER_TYPE_VERBOSE_NAME_PLURAL = 'Supplier Types'
 # SupplierType Strings#
 
 # Supplier Strings#
-FIBER_VERBOSE_NAME = 'Fiber'
-FIBER_VERBOSE_NAME_PLURAL = 'Fibers'
+SUPPLIER_VERBOSE_NAME = 'Supplier'
+SUPPLIER_VERBOSE_NAME_PLURAL = 'Suppliers'
 # Supplier Strings#
+
+# Country Strings#
+COUNTRY_VERBOSE_NAME = 'Country'
+COUNTRY_VERBOSE_NAME_PLURAL = 'Countries'
+# Country Strings#

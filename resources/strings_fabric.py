@@ -22,3 +22,8 @@ FABRIC_CONSTRUCTION_VERBOSE_NAME_PLURAL = 'Fabric Constructions'
 FABRIC_VERBOSE_NAME = 'Fabric'
 FABRIC_VERBOSE_NAME_PLURAL = 'Fabrics'
 # FabricConstruction Strings#
+
+# Shrinkage Strings#
+SHRINKAGE_VERBOSE_NAME = 'Shrinkage'
+SHRINKAGE_VERBOSE_NAME_PLURAL = 'Shrinkage'
+# Shrinkage Strings#

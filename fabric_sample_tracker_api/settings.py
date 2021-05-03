@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'fabric_sample_tracker_api.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'fabric-sample',
+        'NAME': 'fabric_sample',
         'USER': 'root',
         'PASSWORD': '1234',
         'HOST': '127.0.0.1',

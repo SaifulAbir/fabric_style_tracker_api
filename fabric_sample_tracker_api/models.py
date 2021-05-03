@@ -15,3 +15,20 @@ class FabricSampleTrackerModel(models.Model):
 
     class Meta:
         abstract = True
+
+
+def populate_user_info(request, instance, is_changed, is_archived):
+    if is_changed:
+        instance.modified_by = request.user.id
+        instance.modified_from = get_user_address(request)
+        if is_archived:
+            instance.archived_by = request.user.id
+            instance.archived_from = get_user_address(request)
+    else:
+        instance.created_by = request.user.id
+        instance.created_from = get_user_address(request)
+
+
+def get_user_address(request):
+    http_header = request.META.get('HTTP_X_FORWARDED_FOR') if request.META.get('HTTP_X_FORWARDED_FOR') is not None else request.META.get('REMOTE_ADDR')
+    return http_header

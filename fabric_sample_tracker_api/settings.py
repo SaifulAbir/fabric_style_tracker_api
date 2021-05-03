@@ -76,10 +76,28 @@ WSGI_APPLICATION = 'fabric_sample_tracker_api.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'fabric-sample',
+        'USER': 'root',
+        'PASSWORD': '1234',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'OPTIONS': {
+            'sql_mode': 'traditional',
+            'isolation_level': "repeatable read",
+        },
+        'CHARSET':'utf8',
+        'COLLATION':'utf8_general_ci',
+        'COLLATION_CONNECTION':'utf8_general_ci'
     }
 }
 

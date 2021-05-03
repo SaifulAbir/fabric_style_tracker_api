@@ -1,5 +1,6 @@
 from django.db import models
-from fabric_sample_tracker_api.models import FabricSampleTrackerModel
+from django.db.models.signals import pre_save
+from fabric_sample_tracker_api.models import FabricSampleTrackerModel, populate_time_info
 from resources import strings_fabric
 from supplier.models import Supplier
 
@@ -93,3 +94,11 @@ class Fabric(FabricSampleTrackerModel):
 
     def __str__(self):
         return self.dekko_reference
+
+
+pre_save.connect(populate_time_info, sender=Fabric)
+pre_save.connect(populate_time_info, sender=Shrinkage)
+pre_save.connect(populate_time_info, sender=FabricConstruction)
+pre_save.connect(populate_time_info, sender=FabricComposition)
+pre_save.connect(populate_time_info, sender=Fiber)
+pre_save.connect(populate_time_info, sender=FabricType)

@@ -1,9 +1,9 @@
 from django.db import models
-from fabric_sample_tracker_api.models import P7Model
+from fabric_sample_tracker_api.models import FabricSampleTrackerModel
 from resources import strings_supplier
 
 
-class SupplierType(P7Model):
+class SupplierType(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
 
     class Meta:
@@ -15,7 +15,7 @@ class SupplierType(P7Model):
         return self.name
 
 
-class Country(P7Model):
+class Country(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
 
     class Meta:
@@ -27,7 +27,7 @@ class Country(P7Model):
         return self.name
 
 
-class Supplier(P7Model):
+class Supplier(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
     supplier_type = models.ForeignKey(SupplierType, on_delete=models.PROTECT, db_column='supplier_type')
     contact_person_name = models.CharField(max_length=255, null=True, blank=True)
@@ -38,7 +38,6 @@ class Supplier(P7Model):
     corporate_address = models.TextField()
     country = models.ForeignKey(Country, on_delete=models.PROTECT, db_column='country')
     supplier_address = models.TextField()
-
 
     class Meta:
         verbose_name = strings_supplier.SUPPLIER_VERBOSE_NAME

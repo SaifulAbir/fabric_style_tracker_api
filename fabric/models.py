@@ -1,10 +1,10 @@
 from django.db import models
-from fabric_sample_tracker_api.models import P7Model
+from fabric_sample_tracker_api.models import FabricSampleTrackerModel
 from resources import strings_fabric
 from supplier.models import Supplier
 
 
-class FabricType(P7Model):
+class FabricType(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
 
     class Meta:
@@ -16,7 +16,7 @@ class FabricType(P7Model):
         return self.name
 
 
-class Fiber(P7Model):
+class Fiber(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
 
     class Meta:
@@ -28,7 +28,7 @@ class Fiber(P7Model):
         return self.name
 
 
-class FabricComposition(P7Model):
+class FabricComposition(FabricSampleTrackerModel):
     fiber = models.ForeignKey(Fiber, on_delete=models.PROTECT, db_column='fiber')
     percentage = models.PositiveIntegerField()
 
@@ -41,7 +41,7 @@ class FabricComposition(P7Model):
         return self.fiber.name + " " + str(self.percentage) + "%"
 
 
-class FabricConstruction(P7Model):
+class FabricConstruction(FabricSampleTrackerModel):
     ends_per_inch = models.PositiveIntegerField(unique=True)
     picks_per_inch = models.PositiveIntegerField(unique=True)
     warp_count = models.PositiveIntegerField(unique=True)
@@ -56,7 +56,7 @@ class FabricConstruction(P7Model):
         return "{}*{}/{}*{}".format(self.ends_per_inch, self.picks_per_inch, self.warp_count, self.weft_count)
 
 
-class Shrinkage(P7Model):
+class Shrinkage(FabricSampleTrackerModel):
     wrap = models.PositiveIntegerField()
     weft = models.PositiveIntegerField()
 
@@ -69,7 +69,7 @@ class Shrinkage(P7Model):
         return "{}, {}".format(self.wrap, self.weft)
 
 
-class Fabric(P7Model):
+class Fabric(FabricSampleTrackerModel):
     dekko_reference = models.CharField(max_length=255, unique=True)
     mill_reference = models.CharField(max_length=255, unique=True)
     supplier = models.ForeignKey(Supplier, on_delete=models.PROTECT)

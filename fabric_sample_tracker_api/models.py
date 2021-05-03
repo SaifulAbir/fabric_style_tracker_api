@@ -1,7 +1,7 @@
 from django.db import models
 
 
-class P7Model(models.Model):
+class FabricSampleTrackerModel(models.Model):
     created_by = models.CharField(max_length=255, null=True)
     created_at = models.DateTimeField(null=True)
     created_from = models.CharField(max_length=255, null=True)

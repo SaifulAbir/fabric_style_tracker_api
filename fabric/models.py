@@ -43,10 +43,10 @@ class FabricComposition(FabricSampleTrackerModel):
 
 
 class FabricConstruction(FabricSampleTrackerModel):
-    ends_per_inch = models.PositiveIntegerField(unique=True)
-    picks_per_inch = models.PositiveIntegerField(unique=True)
-    warp_count = models.PositiveIntegerField(unique=True)
-    weft_count = models.PositiveIntegerField(unique=True)
+    ends_per_inch = models.PositiveIntegerField()
+    picks_per_inch = models.PositiveIntegerField()
+    warp_count = models.PositiveIntegerField()
+    weft_count = models.PositiveIntegerField()
 
     class Meta:
         verbose_name = strings_fabric.FABRIC_CONSTRUCTION_VERBOSE_NAME
@@ -58,7 +58,7 @@ class FabricConstruction(FabricSampleTrackerModel):
 
 
 class Shrinkage(FabricSampleTrackerModel):
-    wrap = models.PositiveIntegerField()
+    warp = models.PositiveIntegerField()
     weft = models.PositiveIntegerField()
 
     class Meta:
@@ -67,7 +67,7 @@ class Shrinkage(FabricSampleTrackerModel):
         db_table = 'shrinkage'
 
     def __str__(self):
-        return "{}, {}".format(self.wrap, self.weft)
+        return "{}, {}".format(self.warp, self.weft)
 
 
 class Fabric(FabricSampleTrackerModel):
@@ -94,6 +94,14 @@ class Fabric(FabricSampleTrackerModel):
 
     def __str__(self):
         return self.dekko_reference
+
+    @property
+    def fabric_composition(self):
+        return "{} {}".format(self.composition.fiber.name, self.composition.percentage)
+
+    @property
+    def fabric_construction(self):
+        return "{}*{}/{}*{}".format(self.construction.ends_per_inch, self.construction.picks_per_inch, self.construction.warp_count, self.construction.weft_count)
 
 
 pre_save.connect(populate_time_info, sender=Fabric)

@@ -1,5 +1,6 @@
 from django.contrib import admin
-from fabric.models import Fabric, FabricType, FabricComposition, FabricConstruction, Shrinkage, Fiber
+from fabric.models import Fabric, FabricType, FabricComposition, FabricConstruction, Shrinkage, Fiber, FiberPercentage, \
+    FiberComposition
 from fabric_sample_tracker_api.admin import FabricSampleTrackerAdmin
 
 
@@ -16,13 +17,25 @@ class FabricTypeAdmin(FabricSampleTrackerAdmin):
 
 
 @admin.register(Fiber)
-class FiberCompositionAdmin(FabricSampleTrackerAdmin):
+class FiberAdmin(FabricSampleTrackerAdmin):
     list_display = ['name']
+
+
+@admin.register(FiberPercentage)
+class FiberPercentageAdmin(FabricSampleTrackerAdmin):
+    list_display = ['fiber', 'percentage']
+
+
+class FiberCompositionInline(admin.TabularInline):
+    model = FiberComposition
+    fields = ['fiber_percentage', ]
+    extra = 2 # how many rows to show
 
 
 @admin.register(FabricComposition)
 class FabricCompositionAdmin(FabricSampleTrackerAdmin):
-    list_display = ['fiber', 'percentage']
+    inlines = (FiberCompositionInline, )
+    list_display = ['fabric_composition']
 
 
 @admin.register(FabricConstruction)

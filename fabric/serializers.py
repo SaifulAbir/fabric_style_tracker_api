@@ -66,10 +66,9 @@ class SupplierSerializer(ModelSerializer):
 
 
 class FabricCompositionSerializer(ModelSerializer):
-    fiber = serializers.CharField(source='fiber.name')
     class Meta:
         model = FabricComposition
-        fields = ('id', 'fiber', 'percentage')
+        fields = ('id', 'fabric_composition')
 
 
 class FabricTypeSerializer(ModelSerializer):

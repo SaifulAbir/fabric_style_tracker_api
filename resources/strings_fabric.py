@@ -13,6 +13,16 @@ FABRIC_COMPOSITION_VERBOSE_NAME = 'Fabric Composition'
 FABRIC_COMPOSITION_VERBOSE_NAME_PLURAL = 'Fabric Compositions'
 # FabricComposition Strings#
 
+# FiberComposition Strings#
+FIBER_COMPOSITION_VERBOSE_NAME = 'Fiber Composition'
+FIBER_COMPOSITION_VERBOSE_NAME_PLURAL = 'Fiber Compositions'
+# FiberComposition Strings#
+
+# FiberPercentage Strings#
+FIBER_PERCENTAGE_VERBOSE_NAME = 'Fiber Percentage'
+FIBER_PERCENTAGE_VERBOSE_NAME_PLURAL = 'Fiber Percentages'
+# FiberPercentage Strings#
+
 # FabricConstruction Strings#
 FABRIC_CONSTRUCTION_VERBOSE_NAME = 'Fabric Construction'
 FABRIC_CONSTRUCTION_VERBOSE_NAME_PLURAL = 'Fabric Constructions'

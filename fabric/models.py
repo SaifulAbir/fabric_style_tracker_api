@@ -1,5 +1,10 @@
+from django.core.files import File
 from django.db import models
 from django.db.models.signals import pre_save
+from barcode import EAN13
+from barcode.writer import ImageWriter
+from io import BytesIO
+from fabric.utils import unique_code_generator
 from fabric_sample_tracker_api.models import FabricSampleTrackerModel, populate_time_info
 from resources import strings_fabric
 from supplier.models import Supplier
@@ -29,17 +34,40 @@ class Fiber(FabricSampleTrackerModel):
         return self.name
 
 
-class FabricComposition(FabricSampleTrackerModel):
+class FiberPercentage(FabricSampleTrackerModel):
     fiber = models.ForeignKey(Fiber, on_delete=models.PROTECT, db_column='fiber')
     percentage = models.PositiveIntegerField()
+
+    class Meta:
+        verbose_name = strings_fabric.FIBER_PERCENTAGE_VERBOSE_NAME
+        verbose_name_plural = strings_fabric.FIBER_PERCENTAGE_VERBOSE_NAME_PLURAL
+        db_table = 'fiber_percentages'
+
+    def __str__(self):
+        return self.fiber.name + " " + str(self.percentage) + "%"
+
+
+class FabricComposition(FabricSampleTrackerModel):
+    fiber_percentages = models.ManyToManyField(FiberPercentage, through="FiberComposition")
 
     class Meta:
         verbose_name = strings_fabric.FABRIC_COMPOSITION_VERBOSE_NAME
         verbose_name_plural = strings_fabric.FABRIC_COMPOSITION_VERBOSE_NAME_PLURAL
         db_table = 'fabric_compositions'
 
-    def __str__(self):
-        return self.fiber.name + " " + str(self.percentage) + "%"
+    @property
+    def fabric_composition(self):
+        return " ".join([str(fiber) for fiber in self.fiber_percentages.all()])
+
+
+class FiberComposition(FabricSampleTrackerModel):
+    fiber_percentage = models.ForeignKey(FiberPercentage, on_delete=models.PROTECT)
+    fabric_composition = models.ForeignKey(FabricComposition, on_delete=models.PROTECT)
+
+    class Meta:
+        verbose_name = strings_fabric.FIBER_COMPOSITION_VERBOSE_NAME
+        verbose_name_plural = strings_fabric.FIBER_COMPOSITION_VERBOSE_NAME_PLURAL
+        db_table = 'fiber_compositions'
 
 
 class FabricConstruction(FabricSampleTrackerModel):
@@ -84,6 +112,8 @@ class Fabric(FabricSampleTrackerModel):
     moq = models.PositiveIntegerField(null=True, blank=True)
     lead_time = models.PositiveIntegerField(null=True, blank=True)
     availability = models.PositiveIntegerField(null=True, blank=True)
+    code = models.CharField(max_length=13, blank=True)
+    barcode = models.ImageField(upload_to="images/", blank=True)
     marketing_tools = models.TextField(null=True, blank=True)
     remark = models.TextField(null=True, blank=True)
 
@@ -95,16 +125,28 @@ class Fabric(FabricSampleTrackerModel):
     def __str__(self):
         return self.dekko_reference
 
+    def save(self, *args, **kwargs):
+        ean = EAN13(f'{self.code}', writer=ImageWriter())
+        buffer = BytesIO()
+        ean.write(buffer)
+        self.barcode.save(f'{self.dekko_reference}.png', File(buffer), save=False)
+        return super().save(*args, **kwargs)
+
     @property
     def fabric_composition(self):
-        return "{} {}".format(self.composition.fiber.name, self.composition.percentage)
+        return " ".join([str(p) for p in self.composition.fiber_percentages.all()])
 
     @property
     def fabric_construction(self):
         return "{}*{}/{}*{}".format(self.construction.ends_per_inch, self.construction.picks_per_inch, self.construction.warp_count, self.construction.weft_count)
 
 
+def fabric_pre_save_receiver(sender, instance, *args, **kwargs):
+    if not instance.code:
+        instance.code = unique_code_generator(instance)
+
 pre_save.connect(populate_time_info, sender=Fabric)
+pre_save.connect(fabric_pre_save_receiver, sender=Fabric)
 pre_save.connect(populate_time_info, sender=Shrinkage)
 pre_save.connect(populate_time_info, sender=FabricConstruction)
 pre_save.connect(populate_time_info, sender=FabricComposition)

@@ -125,12 +125,12 @@ class Fabric(FabricSampleTrackerModel):
     def __str__(self):
         return self.dekko_reference
 
-    def save(self, *args, **kwargs):
-        ean = EAN13(f'{self.code}', writer=ImageWriter())
-        buffer = BytesIO()
-        ean.write(buffer)
-        self.barcode.save(f'{self.dekko_reference}.png', File(buffer), save=False)
-        return super().save(*args, **kwargs)
+    # def save(self, *args, **kwargs):
+    #     ean = EAN13(f'{self.code}', writer=ImageWriter())
+    #     buffer = BytesIO()
+    #     ean.write(buffer)
+    #     self.barcode.save(f'{self.dekko_reference}.png', File(buffer), save=False)
+    #     return super().save(*args, **kwargs)
 
     @property
     def fabric_composition(self):
@@ -144,6 +144,12 @@ class Fabric(FabricSampleTrackerModel):
 def fabric_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.code:
         instance.code = unique_code_generator(instance)
+        print(instance.code)
+        ean = EAN13(f'{instance.code}', writer=ImageWriter())
+        buffer = BytesIO()
+        ean.write(buffer)
+        instance.barcode.save(f'{instance.dekko_reference}.png', File(buffer), save=False)
+
 
 pre_save.connect(populate_time_info, sender=Fabric)
 pre_save.connect(fabric_pre_save_receiver, sender=Fabric)

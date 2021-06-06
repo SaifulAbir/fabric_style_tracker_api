@@ -19,14 +19,25 @@ class FabricListAPI(ListAPIView):
     )
     serializer_class = FabricListSerializer
 
+
 class FabricCompositionListAPI(ListAPIView):
     queryset = FabricComposition.objects.filter(
         is_archived=False
     )
     serializer_class = FabricCompositionSerializer
 
+
 class FabricTypeListAPI(ListAPIView):
     queryset = FabricType.objects.filter(
         is_archived=False
     )
+    serializer_class = FabricTypeSerializer
+
+
+class FabricTypeCreateAPI(CreateAPIView):
+    serializer_class = FabricTypeSerializer
+
+
+class FabricTypeUpdateAPI(UpdateAPIView):
+    queryset = FabricType.objects.all()
     serializer_class = FabricTypeSerializer

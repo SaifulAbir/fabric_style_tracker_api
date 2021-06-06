@@ -59,12 +59,6 @@ class FabricListSerializer(ModelSerializer):
                   'moq', 'lead_time', 'availability', 'marketing_tools', 'remark', 'barcode')
 
 
-class SupplierSerializer(ModelSerializer):
-    class Meta:
-        model = Supplier
-        fields = ('id', 'name')
-
-
 class FabricCompositionSerializer(ModelSerializer):
     class Meta:
         model = FabricComposition

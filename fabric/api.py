@@ -1,7 +1,7 @@
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
-from fabric.models import Fabric, FabricComposition, FabricType
+from fabric.models import Fabric, FabricComposition, FabricType, FiberPercentage
 from fabric.serializers import FabricSerializer, FabricCompositionSerializer, FabricTypeSerializer, \
-    FabricListSerializer
+    FabricListSerializer, FiberPercentageSerializer
 
 
 class FabricCreateAPI(CreateAPIView):
@@ -34,6 +34,13 @@ class FabricTypeListAPI(ListAPIView):
     serializer_class = FabricTypeSerializer
 
 
+class FiberPercentageListAPI(ListAPIView):
+    queryset = FiberPercentage.objects.filter(
+        is_archived=False
+    )
+    serializer_class = FiberPercentageSerializer
+
+
 class FabricTypeCreateAPI(CreateAPIView):
     serializer_class = FabricTypeSerializer
 
@@ -41,3 +48,7 @@ class FabricTypeCreateAPI(CreateAPIView):
 class FabricTypeUpdateAPI(UpdateAPIView):
     queryset = FabricType.objects.all()
     serializer_class = FabricTypeSerializer
+
+
+class FabricCompositionCreateAPI(CreateAPIView):
+    serializer_class = FabricCompositionSerializer

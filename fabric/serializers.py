@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-from fabric.models import Fabric, FabricComposition, FabricType, FabricConstruction, Shrinkage
+from fabric.models import Fabric, FabricComposition, FabricType, FabricConstruction, Shrinkage, FiberPercentage
 from supplier.models import Supplier
 
 
@@ -62,10 +62,16 @@ class FabricListSerializer(ModelSerializer):
 class FabricCompositionSerializer(ModelSerializer):
     class Meta:
         model = FabricComposition
-        fields = ('id', 'fabric_composition')
+        fields = ('id', 'fabric_composition', 'fiber_percentages')
 
 
 class FabricTypeSerializer(ModelSerializer):
     class Meta:
         model = FabricType
+        fields = ('id', 'name')
+
+
+class FiberPercentageSerializer(ModelSerializer):
+    class Meta:
+        model = FiberPercentage
         fields = ('id', 'name')

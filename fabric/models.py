@@ -46,6 +46,10 @@ class FiberPercentage(FabricSampleTrackerModel):
     def __str__(self):
         return self.fiber.name + " " + str(self.percentage) + "%"
 
+    @property
+    def name(self):
+        return self.fiber.name + " " + str(self.percentage) + "%"
+
 
 class FabricComposition(FabricSampleTrackerModel):
     fiber_percentages = models.ManyToManyField(FiberPercentage, through="FiberComposition")

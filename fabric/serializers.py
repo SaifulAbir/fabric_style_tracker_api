@@ -74,4 +74,4 @@ class FabricTypeSerializer(ModelSerializer):
 class FiberPercentageSerializer(ModelSerializer):
     class Meta:
         model = FiberPercentage
-        fields = ('id', 'name')
+        fields = ('id', 'name', 'fiber', 'percentage')

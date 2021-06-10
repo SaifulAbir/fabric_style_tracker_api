@@ -41,6 +41,15 @@ class FiberPercentageListAPI(ListAPIView):
     serializer_class = FiberPercentageSerializer
 
 
+class FiberPercentageCreateAPI(CreateAPIView):
+    serializer_class = FiberPercentageSerializer
+
+
+class FiberPercentageUpdateAPI(UpdateAPIView):
+    queryset = FiberPercentage.objects.all()
+    serializer_class = FiberPercentageSerializer
+
+
 class FabricTypeCreateAPI(CreateAPIView):
     serializer_class = FabricTypeSerializer
 

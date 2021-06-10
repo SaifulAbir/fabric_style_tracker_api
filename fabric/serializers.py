@@ -65,7 +65,7 @@ class FiberPercentageSerializer(ModelSerializer):
         fields = ('id', 'name', 'fiber', 'percentage')
 
 
-class FiberListSerializer(ModelSerializer):
+class FiberSerializer(ModelSerializer):
     class Meta:
         model = Fiber
         fields = ('id', 'name')

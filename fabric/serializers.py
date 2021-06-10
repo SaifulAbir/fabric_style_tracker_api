@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-from fabric.models import Fabric, FabricComposition, FabricType, FabricConstruction, Shrinkage, FiberPercentage
+from fabric.models import Fabric, FabricComposition, FabricType, FabricConstruction, Shrinkage, FiberPercentage, Fiber
 from supplier.models import Supplier
 
 
@@ -58,6 +58,11 @@ class FabricListSerializer(ModelSerializer):
                   'picks_per_inch', 'warp_count', 'weft_count', 'warp', 'weft', 'weight', 'cuttable_width', 'price',
                   'moq', 'lead_time', 'availability', 'marketing_tools', 'remark', 'barcode')
 
+
+class FiberListSerializer(ModelSerializer):
+    class Meta:
+        model = Fiber
+        fields = ('id', 'name')
 
 class FabricCompositionSerializer(ModelSerializer):
     class Meta:

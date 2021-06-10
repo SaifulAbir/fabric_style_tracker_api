@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-from fabric.models import Fabric, FabricComposition, FabricType, FabricConstruction, Shrinkage, FiberPercentage, Fiber
-from supplier.models import Supplier
+from fabric.models import Fabric, FabricComposition, FabricType, FabricConstruction, Shrinkage, FiberPercentage, \
+    FiberComposition, Fiber
 
 
 class FabricSerializer(ModelSerializer):
@@ -59,24 +59,37 @@ class FabricListSerializer(ModelSerializer):
                   'moq', 'lead_time', 'availability', 'marketing_tools', 'remark', 'barcode')
 
 
+class FiberPercentageSerializer(ModelSerializer):
+    class Meta:
+        model = FiberPercentage
+        fields = ('id', 'name', 'fiber', 'percentage')
+
+
 class FiberListSerializer(ModelSerializer):
     class Meta:
         model = Fiber
         fields = ('id', 'name')
 
 class FabricCompositionSerializer(ModelSerializer):
+    fiber_percentages = FiberPercentageSerializer(read_only=True, many=True)
+    fiber_percentages_id = serializers.PrimaryKeyRelatedField(queryset=FiberPercentage.objects.all(), write_only=True, many=True)
     class Meta:
         model = FabricComposition
-        fields = ('id', 'fabric_composition', 'fiber_percentages')
+        fields = ('id', 'fabric_composition', 'fiber_percentages', 'fiber_percentages_id')
+        depth = 1
+
+    def create(self, validated_data):
+        validated_data.pop('fiber_percentages_id')
+        composition = FabricComposition.objects.create(**validated_data)
+        if "fiber_percentages_id" in self.initial_data:
+            fiber_percentages = self.initial_data.get("fiber_percentages_id")
+            for fiber_percentage in fiber_percentages:
+                FiberComposition(fiber_percentage_id=fiber_percentage, fabric_composition=composition).save()
+        composition.save()
+        return composition
 
 
 class FabricTypeSerializer(ModelSerializer):
     class Meta:
         model = FabricType
         fields = ('id', 'name')
-
-
-class FiberPercentageSerializer(ModelSerializer):
-    class Meta:
-        model = FiberPercentage
-        fields = ('id', 'name', 'fiber', 'percentage')

@@ -88,6 +88,16 @@ class FabricCompositionSerializer(ModelSerializer):
         composition.save()
         return composition
 
+    def update(self, instance, validated_data):
+        validated_data.pop('fiber_percentages_id')
+        if "fiber_percentages_id" in self.initial_data:
+            fiber_percentages = self.initial_data.get("fiber_percentages_id")
+            FiberComposition.objects.filter(fabric_composition=instance).delete()
+            for fiber_percentage in fiber_percentages:
+                FiberComposition(fiber_percentage_id=fiber_percentage, fabric_composition=instance).save()
+        instance.save()
+        return instance
+
 
 class FabricTypeSerializer(ModelSerializer):
     class Meta:

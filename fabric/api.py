@@ -67,3 +67,8 @@ class FabricTypeUpdateAPI(UpdateAPIView):
 
 class FabricCompositionCreateAPI(CreateAPIView):
     serializer_class = FabricCompositionSerializer
+
+
+class FabricCompositionUpdateAPI(UpdateAPIView):
+    queryset = FabricComposition.objects.all()
+    serializer_class = FabricCompositionSerializer

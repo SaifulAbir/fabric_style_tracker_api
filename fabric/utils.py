@@ -2,7 +2,7 @@ import random
 
 
 def create_unique_number():
-      return random.randint(1000000000000, 9999999999999)
+      return random.randint(100000000000, 999999999999)
 
 
 def unique_code_generator(instance):

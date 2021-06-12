@@ -148,8 +148,8 @@ class Fabric(FabricSampleTrackerModel):
 def fabric_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.code:
         instance.code = unique_code_generator(instance)
-        print(instance.code)
         ean = EAN13(f'{instance.code}', writer=ImageWriter())
+        instance.code = ean
         buffer = BytesIO()
         ean.write(buffer)
         instance.barcode.save(f'{instance.dekko_reference}.png', File(buffer), save=False)

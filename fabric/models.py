@@ -62,6 +62,8 @@ class FabricComposition(FabricSampleTrackerModel):
     @property
     def fabric_composition(self):
         return " ".join([str(fiber) for fiber in self.fiber_percentages.all()])
+    def __str__(self):
+        return " ".join([str(fiber) for fiber in self.fiber_percentages.all()])
 
 
 class FiberComposition(FabricSampleTrackerModel):
@@ -71,6 +73,7 @@ class FiberComposition(FabricSampleTrackerModel):
     class Meta:
         verbose_name = strings_fabric.FIBER_COMPOSITION_VERBOSE_NAME
         verbose_name_plural = strings_fabric.FIBER_COMPOSITION_VERBOSE_NAME_PLURAL
+        unique_together = ('fiber_percentage', 'fabric_composition',)
         db_table = 'fiber_compositions'
 
 

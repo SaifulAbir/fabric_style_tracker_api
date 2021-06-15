@@ -1,5 +1,8 @@
+from collections import Counter
+
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
-from fabric.models import Fabric, FabricComposition, FabricType, FiberPercentage, Fiber
+from fabric.models import Fabric, FabricComposition, FabricType, FiberPercentage, Fiber, FiberComposition, \
+    FabricConstruction, Shrinkage
 from fabric.serializers import FabricSerializer, FabricCompositionSerializer, FabricTypeSerializer, \
     FabricListSerializer, FiberPercentageSerializer, FiberSerializer
 from rest_framework.decorators import api_view, permission_classes
@@ -17,8 +20,12 @@ class FabricCreateAPI(CreateAPIView):
 @permission_classes(())
 def FabricCreateFromExcelAPI(request):
     excel_data = request.data
-    print("Excel data:",excel_data)
+    new_entry = 0
+    total_data = 0
+
     for key in excel_data:
+        fiber_percentages = []
+        total_data += 1
         mill_reference = key[0]
         dekko_reference = key[1]
         supplier = key[2]
@@ -45,48 +52,113 @@ def FabricCreateFromExcelAPI(request):
         remark = key[23]
 
         if not Fabric.objects.filter(mill_reference=mill_reference).exists():
+            new_entry += 1
             if not Supplier.objects.filter(name=supplier).exists():
-                Supplier.objects.create(name=supplier)
+                supplier_obj = Supplier.objects.create(name=supplier)
+            else:
+                supplier_obj = Supplier.objects.get(name=supplier)
 
             if not FabricType.objects.filter(name=fabric_type).exists():
-                FabricType.objects.create(name=fabric_type)
+                fabric_type_obj = FabricType.objects.create(name=fabric_type)
+            else:
+                fabric_type_obj = FabricType.objects.get(name=fabric_type)
 
-            # if not Fiber.objects.filter(name=fiber1).exists():
-            #     Fiber.objects.create(name=fiber1)
-
-            if not FiberPercentage.objects.filter(fiber=fiber1).exists():
+            if not FiberPercentage.objects.filter(fiber__name=fiber1, percentage=percentage1).exists():
                 if not Fiber.objects.filter(name=fiber1).exists():
-                    Fiber.objects.create(name=fiber1)
+                    fiber_obj1 = Fiber.objects.create(name=fiber1)
+                    fiber_percentage_obj1 = FiberPercentage.objects.create(fiber=fiber_obj1, percentage=percentage1)
+                    fiber_percentages.append(fiber_percentage_obj1)
                 else:
-                    if FiberPercentage.objects.filter(fiber=fiber1, percentage=percentage1):
-                        FiberPercentage.objects.create(fiber=fiber1, percentage=percentage1)
+                    fiber_obj1 = Fiber.objects.get(name=fiber1)
+                    fiber_percentage_obj1 = FiberPercentage.objects.create(fiber=fiber_obj1, percentage=percentage1)
+                    fiber_percentages.append(fiber_percentage_obj1)
+            else:
+                fiber_percentage_obj1 = FiberPercentage.objects.get(fiber__name=fiber1, percentage=percentage1)
+                fiber_percentages.append(fiber_percentage_obj1)
 
-            if not Fiber.objects.filter(name=fiber2).exists():
-                Fiber.objects.create(name=fiber2)
+            if not FiberPercentage.objects.filter(fiber__name=fiber2, percentage=percentage2).exists():
+                if not Fiber.objects.filter(name=fiber2).exists():
+                    fiber_obj2 = Fiber.objects.create(name=fiber2)
+                    fiber_percentage_obj2 = FiberPercentage.objects.create(fiber=fiber_obj2, percentage=percentage2)
+                    fiber_percentages.append(fiber_percentage_obj2)
+                else:
+                    fiber_obj2 = Fiber.objects.get(name=fiber2)
+                    fiber_percentage_obj2 = FiberPercentage.objects.create(fiber=fiber_obj2, percentage=percentage2)
+                    fiber_percentages.append(fiber_percentage_obj2)
+            else:
+                fiber_percentage_obj2 = FiberPercentage.objects.get(fiber__name=fiber2, percentage=percentage2)
+                fiber_percentages.append(fiber_percentage_obj2)
 
-            if not Fiber.objects.filter(name=fiber3).exists():
-                Fiber.objects.create(name=fiber3)
+            if not FiberPercentage.objects.filter(fiber__name=fiber3, percentage=percentage3).exists():
+                if not Fiber.objects.filter(name=fiber3).exists():
+                    fiber_obj3 = Fiber.objects.create(name=fiber3)
+                    fiber_percentage_obj3 = FiberPercentage.objects.create(fiber=fiber_obj3, percentage=percentage3)
+                    fiber_percentages.append(fiber_percentage_obj3)
+                else:
+                    fiber_obj3 = Fiber.objects.get(name=fiber3)
+                    fiber_percentage_obj3 = FiberPercentage.objects.create(fiber=fiber_obj3, percentage=percentage3)
+                    fiber_percentages.append(fiber_percentage_obj3)
+            else:
+                fiber_percentage_obj3 = FiberPercentage.objects.get(fiber__name=fiber3, percentage=percentage3)
+                fiber_percentages.append(fiber_percentage_obj3)
 
+            if len(fiber_percentages) > 0:
+                fiber_percentage_id = [obj.id for obj in fiber_percentages]
+                fiber_compositions = FiberComposition.objects.filter(fiber_percentage__in=fiber_percentage_id)
+                fabric_composition_id_counter = dict(Counter([obj.fabric_composition.id for obj in fiber_compositions]))
+                fabric_composition = None
+                for key, value in fabric_composition_id_counter.items():
+                    if value == len(fiber_percentage_id):
+                        fabric_composition = key
 
+                if not fabric_composition:
+                    composition = FabricComposition.objects.create()
+                    for fiber_percentage in fiber_percentages:
+                        composition = FiberComposition(fiber_percentage=fiber_percentage, fabric_composition=composition).save()
+                    composition = composition.id
+                else:
+                    composition = fabric_composition
 
+            if not FabricConstruction.objects.filter(ends_per_inch=ends_per_inch, picks_per_inch=picks_per_inch, warp_count=warp_count, weft_count=weft_count).exists():
+                construction_obj = FabricConstruction.objects.create(ends_per_inch=ends_per_inch, picks_per_inch=picks_per_inch, warp_count=warp_count, weft_count=weft_count)
+            else:
+                construction_obj = FabricConstruction.objects.get(ends_per_inch=ends_per_inch, picks_per_inch=picks_per_inch, warp_count=warp_count, weft_count=weft_count)
 
-    data_error = {
-        'status': "Failed to upload data.",
-        'code': 500,
-        "result": None
-    }
+            if not Shrinkage.objects.filter(warp=warp, weft=weft).exists():
+                shrinkage_obj = Shrinkage.objects.create(warp=warp, weft=weft)
+            else:
+                shrinkage_obj = Shrinkage.objects.get(warp=warp, weft=weft)
 
+            Fabric.objects.create(
+                dekko_reference=dekko_reference,
+                mill_reference=mill_reference,
+                supplier=supplier_obj,
+                fabric_type=fabric_type_obj,
+                composition_id=composition,
+                construction=construction_obj,
+                shrinkage=shrinkage_obj,
+                weight=weight,
+                cuttable_width=cuttable_width,
+                price=price,
+                moq=moq,
+                lead_time=lead_time,
+                availability=availability,
+                marketing_tools=marketing_tools,
+                remark=remark
+            )
+
+    if new_entry == 0:
+        message = "Sheet is up to date."
+    else:
+        message = "{} row added out of {}.".format(new_entry, total_data)
     data = {
         'status': 'success',
         'code': HTTP_200_OK,
-        "message": 'A verification link has been sent to your email address. Please open it to confirm your account.',
-        "result": {
-            "user": {
-                #"email": excel_data['email'],
-            }
-        }
+        "message": message,
     }
     return Response(data)
+
+
 class FabricUpdateAPI(UpdateAPIView):
     queryset = Fabric.objects.all()
     serializer_class = FabricSerializer

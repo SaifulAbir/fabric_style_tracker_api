@@ -35,7 +35,12 @@ class FiberCompositionInline(admin.TabularInline):
 @admin.register(FabricComposition)
 class FabricCompositionAdmin(FabricSampleTrackerAdmin):
     inlines = (FiberCompositionInline, )
-    list_display = ['fabric_composition']
+    list_display = ['fabric_composition']\
+
+
+@admin.register(FiberComposition)
+class FiberCompositionAdmin(FabricSampleTrackerAdmin):
+    list_display = ['fiber_percentage', 'fabric_composition']
 
 
 @admin.register(FabricConstruction)

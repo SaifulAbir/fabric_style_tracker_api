@@ -29,14 +29,14 @@ class Country(FabricSampleTrackerModel):
 
 class Supplier(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
-    supplier_type = models.ForeignKey(SupplierType, on_delete=models.PROTECT, db_column='supplier_type')
+    supplier_type = models.ForeignKey(SupplierType, on_delete=models.PROTECT, null=True, db_column='supplier_type')
     contact_person_name = models.CharField(max_length=255, null=True, blank=True)
     contact_person_number = models.CharField(max_length=255, null=True, blank=True)
     contact_person_email = models.EmailField(max_length=255, null=True, blank=True)
     license_number = models.CharField(max_length=255, null=True, blank=True)
     vat_number = models.PositiveIntegerField(null=True, blank=True)
     corporate_address = models.TextField()
-    country = models.ForeignKey(Country, on_delete=models.PROTECT, db_column='country')
+    country = models.ForeignKey(Country, on_delete=models.PROTECT, null=True, db_column='country')
     supplier_address = models.TextField()
 
     class Meta:

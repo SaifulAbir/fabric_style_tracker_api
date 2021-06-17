@@ -89,18 +89,19 @@ def FabricCreateFromExcelAPI(request):
                 fiber_percentage_obj2 = FiberPercentage.objects.get(fiber__name=fiber2, percentage=percentage2)
                 fiber_percentages.append(fiber_percentage_obj2)
 
-            if not FiberPercentage.objects.filter(fiber__name=fiber3, percentage=percentage3).exists():
-                if not Fiber.objects.filter(name=fiber3).exists():
-                    fiber_obj3 = Fiber.objects.create(name=fiber3)
-                    fiber_percentage_obj3 = FiberPercentage.objects.create(fiber=fiber_obj3, percentage=percentage3)
-                    fiber_percentages.append(fiber_percentage_obj3)
+            if fiber3 != None or percentage3 != None:
+                if not FiberPercentage.objects.filter(fiber__name=fiber3, percentage=percentage3).exists():
+                    if not Fiber.objects.filter(name=fiber3).exists():
+                        fiber_obj3 = Fiber.objects.create(name=fiber3)
+                        fiber_percentage_obj3 = FiberPercentage.objects.create(fiber=fiber_obj3, percentage=percentage3)
+                        fiber_percentages.append(fiber_percentage_obj3)
+                    else:
+                        fiber_obj3 = Fiber.objects.get(name=fiber3)
+                        fiber_percentage_obj3 = FiberPercentage.objects.create(fiber=fiber_obj3, percentage=percentage3)
+                        fiber_percentages.append(fiber_percentage_obj3)
                 else:
-                    fiber_obj3 = Fiber.objects.get(name=fiber3)
-                    fiber_percentage_obj3 = FiberPercentage.objects.create(fiber=fiber_obj3, percentage=percentage3)
+                    fiber_percentage_obj3 = FiberPercentage.objects.get(fiber__name=fiber3, percentage=percentage3)
                     fiber_percentages.append(fiber_percentage_obj3)
-            else:
-                fiber_percentage_obj3 = FiberPercentage.objects.get(fiber__name=fiber3, percentage=percentage3)
-                fiber_percentages.append(fiber_percentage_obj3)
 
             if len(fiber_percentages) > 0:
                 fiber_percentage_id = [obj.id for obj in fiber_percentages]
@@ -114,7 +115,7 @@ def FabricCreateFromExcelAPI(request):
                 if not fabric_composition:
                     composition = FabricComposition.objects.create()
                     for fiber_percentage in fiber_percentages:
-                        composition = FiberComposition(fiber_percentage=fiber_percentage, fabric_composition=composition).save()
+                        FiberComposition(fiber_percentage_id=fiber_percentage.id, fabric_composition=composition).save()
                     composition = composition.id
                 else:
                     composition = fabric_composition

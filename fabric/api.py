@@ -63,31 +63,33 @@ def FabricCreateFromExcelAPI(request):
             else:
                 fabric_type_obj = FabricType.objects.get(name=fabric_type)
 
-            if not FiberPercentage.objects.filter(fiber__name=fiber1, percentage=percentage1).exists():
-                if not Fiber.objects.filter(name=fiber1).exists():
-                    fiber_obj1 = Fiber.objects.create(name=fiber1)
-                    fiber_percentage_obj1 = FiberPercentage.objects.create(fiber=fiber_obj1, percentage=percentage1)
-                    fiber_percentages.append(fiber_percentage_obj1)
+            if fiber1 != None or percentage1 != None:
+                if not FiberPercentage.objects.filter(fiber__name=fiber1, percentage=percentage1).exists():
+                    if not Fiber.objects.filter(name=fiber1).exists():
+                        fiber_obj1 = Fiber.objects.create(name=fiber1)
+                        fiber_percentage_obj1 = FiberPercentage.objects.create(fiber=fiber_obj1, percentage=percentage1)
+                        fiber_percentages.append(fiber_percentage_obj1)
+                    else:
+                        fiber_obj1 = Fiber.objects.get(name=fiber1)
+                        fiber_percentage_obj1 = FiberPercentage.objects.create(fiber=fiber_obj1, percentage=percentage1)
+                        fiber_percentages.append(fiber_percentage_obj1)
                 else:
-                    fiber_obj1 = Fiber.objects.get(name=fiber1)
-                    fiber_percentage_obj1 = FiberPercentage.objects.create(fiber=fiber_obj1, percentage=percentage1)
+                    fiber_percentage_obj1 = FiberPercentage.objects.get(fiber__name=fiber1, percentage=percentage1)
                     fiber_percentages.append(fiber_percentage_obj1)
-            else:
-                fiber_percentage_obj1 = FiberPercentage.objects.get(fiber__name=fiber1, percentage=percentage1)
-                fiber_percentages.append(fiber_percentage_obj1)
 
-            if not FiberPercentage.objects.filter(fiber__name=fiber2, percentage=percentage2).exists():
-                if not Fiber.objects.filter(name=fiber2).exists():
-                    fiber_obj2 = Fiber.objects.create(name=fiber2)
-                    fiber_percentage_obj2 = FiberPercentage.objects.create(fiber=fiber_obj2, percentage=percentage2)
-                    fiber_percentages.append(fiber_percentage_obj2)
+            if fiber2 != None or percentage2 != None:
+                if not FiberPercentage.objects.filter(fiber__name=fiber2, percentage=percentage2).exists():
+                    if not Fiber.objects.filter(name=fiber2).exists():
+                        fiber_obj2 = Fiber.objects.create(name=fiber2)
+                        fiber_percentage_obj2 = FiberPercentage.objects.create(fiber=fiber_obj2, percentage=percentage2)
+                        fiber_percentages.append(fiber_percentage_obj2)
+                    else:
+                        fiber_obj2 = Fiber.objects.get(name=fiber2)
+                        fiber_percentage_obj2 = FiberPercentage.objects.create(fiber=fiber_obj2, percentage=percentage2)
+                        fiber_percentages.append(fiber_percentage_obj2)
                 else:
-                    fiber_obj2 = Fiber.objects.get(name=fiber2)
-                    fiber_percentage_obj2 = FiberPercentage.objects.create(fiber=fiber_obj2, percentage=percentage2)
+                    fiber_percentage_obj2 = FiberPercentage.objects.get(fiber__name=fiber2, percentage=percentage2)
                     fiber_percentages.append(fiber_percentage_obj2)
-            else:
-                fiber_percentage_obj2 = FiberPercentage.objects.get(fiber__name=fiber2, percentage=percentage2)
-                fiber_percentages.append(fiber_percentage_obj2)
 
             if fiber3 != None or percentage3 != None:
                 if not FiberPercentage.objects.filter(fiber__name=fiber3, percentage=percentage3).exists():
@@ -109,8 +111,10 @@ def FabricCreateFromExcelAPI(request):
                 fabric_composition_id_counter = dict(Counter([obj.fabric_composition.id for obj in fiber_compositions]))
                 fabric_composition = None
                 for key, value in fabric_composition_id_counter.items():
-                    if value == len(fiber_percentage_id):
-                        fabric_composition = key
+                    fabric_obj_count = FabricComposition.objects.get(id=key).fiber_percentages.count()
+                    if fabric_obj_count == len(fiber_percentages):
+                        if value == len(fiber_percentage_id):
+                            fabric_composition = key
 
                 if not fabric_composition:
                     composition = FabricComposition.objects.create()

@@ -1,5 +1,7 @@
 from collections import Counter
 
+from django.http import HttpResponse, Http404
+from rest_framework import generics
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
 from fabric.models import Fabric, FabricComposition, FabricType, FiberPercentage, Fiber, FiberComposition, \
     FabricConstruction, Shrinkage
@@ -8,12 +10,26 @@ from fabric.serializers import FabricSerializer, FabricCompositionSerializer, Fa
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
+
+from fabric_sample_tracker_api.settings import STATIC_DIR
 from supplier.models import Supplier
 from supplier.api import SupplierListAPI
-
+import os
 
 class FabricCreateAPI(CreateAPIView):
     serializer_class = FabricSerializer
+
+class DownloadFabricExcelFormat(generics.RetrieveAPIView):
+
+    def get(self, request, *args, **kwargs):
+        file_path = os.path.join(STATIC_DIR, 'fabric_excel_format.xlsx')
+        if file_path:
+            with open(file_path, 'rb') as fh:
+                response = HttpResponse(fh.read())
+                response['Content-Disposition'] = 'attachment; filename=fabric_excel_format.xlsx'
+                return response
+        else:
+            raise Http404
 
 
 @api_view(["POST"])

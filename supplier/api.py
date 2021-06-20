@@ -26,6 +26,13 @@ class CountryListAPI(ListAPIView):
     serializer_class = CountrySerializer
 
 
+class SupplierTypeCreateAPI(CreateAPIView):
+    serializer_class = SupplierTypeSerializer
+
+class SupplierTypeUpdateAPI(UpdateAPIView):
+    queryset = SupplierType.objects.all()
+    serializer_class = SupplierTypeSerializer
+
 class SupplierTypeListAPI(ListAPIView):
     queryset = SupplierType.objects.filter(
         is_archived=False

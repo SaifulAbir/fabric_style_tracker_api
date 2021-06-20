@@ -2,11 +2,12 @@ from django.urls import path
 from fabric.api import FabricCreateAPI, FabricListAPI, FabricCompositionListAPI, FabricTypeListAPI, \
     FabricUpdateAPI, FabricTypeCreateAPI, FabricTypeUpdateAPI, FabricCompositionCreateAPI, FiberPercentageListAPI, \
     FiberPercentageCreateAPI, FiberPercentageUpdateAPI, FiberListAPI, FabricCompositionUpdateAPI, FiberCreateAPI, \
-    FiberUpdateAPI, FabricCreateFromExcelAPI
+    FiberUpdateAPI, FabricCreateFromExcelAPI, DownloadFabricExcelFormat
 
 urlpatterns = [
     path('fabric/create/', FabricCreateAPI.as_view()),
     path('fabric/create_from_excel/', FabricCreateFromExcelAPI),
+    path('fabric/fabric_excel_format/', DownloadFabricExcelFormat.as_view()),
     path('fabric/update/<str:pk>/', FabricUpdateAPI.as_view()),
     path('fabric_type/create/', FabricTypeCreateAPI.as_view()),
     path('fabric_type/update/<str:pk>/', FabricTypeUpdateAPI.as_view()),

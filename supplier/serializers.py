@@ -17,7 +17,7 @@ class SupplierSerializer(ModelSerializer):
 class SupplierTypeSerializer(ModelSerializer):
     class Meta:
         model = SupplierType
-        fields = "__all__"
+        fields = ["id", "name"]
 
 
 class CountrySerializer(ModelSerializer):

@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'fabric',
     'supplier',
-    'corsheaders'
+    'corsheaders',
+    'style'
 ]
 
 MIDDLEWARE = [

@@ -118,7 +118,8 @@ class Fabric(FabricSampleTrackerModel):
     price = models.DecimalField(decimal_places=2, max_digits=6, null=True, blank=True)
     moq = models.PositiveIntegerField(null=True, blank=True)
     lead_time = models.PositiveIntegerField(null=True, blank=True)
-    availability = models.PositiveIntegerField(null=True, blank=True)
+    initial_availability = models.PositiveIntegerField(null=True, blank=True)
+    last_availability = models.PositiveIntegerField(null=True, blank=True)
     code = models.CharField(max_length=13, blank=True)
     barcode = models.ImageField(upload_to="images/", blank=True)
     marketing_tools = models.TextField(null=True, blank=True)
@@ -148,6 +149,21 @@ class Fabric(FabricSampleTrackerModel):
         return "{}*{}/{}*{}".format(self.construction.ends_per_inch, self.construction.picks_per_inch, self.construction.warp_count, self.construction.weft_count)
 
 
+class FabricDetail(FabricSampleTrackerModel):
+    fabric = models.ForeignKey(Fabric, on_delete=models.PROTECT)
+    initial_availability = models.PositiveIntegerField(null=True, blank=True)
+    used_yds = models.PositiveIntegerField(null=True, blank=True)
+    last_availability = models.PositiveIntegerField(null=True, blank=True)
+
+    class Meta:
+        verbose_name = strings_fabric.FABRIC_DETAIL_VERBOSE_NAME
+        verbose_name_plural = strings_fabric.FABRIC_DETAIL_VERBOSE_NAME_PLURAL
+        db_table = 'fabric_details'
+
+    def __str__(self):
+        return self.fabric.dekko_reference
+
+
 def fabric_pre_save_receiver(sender, instance, *args, **kwargs):
     if not instance.code:
         instance.code = unique_code_generator(instance)
@@ -159,6 +175,7 @@ def fabric_pre_save_receiver(sender, instance, *args, **kwargs):
 
 
 pre_save.connect(populate_time_info, sender=Fabric)
+pre_save.connect(populate_time_info, sender=FabricDetail)
 pre_save.connect(fabric_pre_save_receiver, sender=Fabric)
 pre_save.connect(populate_time_info, sender=Shrinkage)
 pre_save.connect(populate_time_info, sender=FabricConstruction)

@@ -37,3 +37,8 @@ FABRIC_VERBOSE_NAME_PLURAL = 'Fabrics'
 SHRINKAGE_VERBOSE_NAME = 'Shrinkage'
 SHRINKAGE_VERBOSE_NAME_PLURAL = 'Shrinkage'
 # Shrinkage Strings#
+
+# Fabric Detail Strings#
+FABRIC_DETAIL_VERBOSE_NAME = 'Fabric Detail'
+FABRIC_DETAIL_VERBOSE_NAME_PLURAL = 'Fabric Details'
+# Fabric Detail Strings#

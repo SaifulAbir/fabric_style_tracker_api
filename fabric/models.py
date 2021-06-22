@@ -153,8 +153,8 @@ class FabricDetail(FabricSampleTrackerModel):
     last_availability = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
-        verbose_name = strings_fabric.FABRIC_VERBOSE_NAME
-        verbose_name_plural = strings_fabric.FABRIC_VERBOSE_NAME_PLURAL
+        verbose_name = strings_fabric.FABRIC_DETAIL_VERBOSE_NAME
+        verbose_name_plural = strings_fabric.FABRIC_DETAIL_VERBOSE_NAME_PLURAL
         db_table = 'fabric_details'
 
     def __str__(self):

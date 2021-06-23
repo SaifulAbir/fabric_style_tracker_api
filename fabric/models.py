@@ -41,6 +41,7 @@ class FiberPercentage(FabricSampleTrackerModel):
     class Meta:
         verbose_name = strings_fabric.FIBER_PERCENTAGE_VERBOSE_NAME
         verbose_name_plural = strings_fabric.FIBER_PERCENTAGE_VERBOSE_NAME_PLURAL
+        unique_together = ('fiber', 'percentage',)
         db_table = 'fiber_percentages'
 
     def __str__(self):

@@ -63,7 +63,7 @@ def FabricCreateFromExcelAPI(request):
         price = key[18]
         moq = key[19]
         lead_time = key[20]
-        availability = key[21]
+        initial_availability = key[21]
         marketing_tools = key[22]
         remark = key[23]
 
@@ -163,7 +163,7 @@ def FabricCreateFromExcelAPI(request):
                 price=price,
                 moq=moq,
                 lead_time=lead_time,
-                availability=availability,
+                initial_availability=initial_availability,
                 marketing_tools=marketing_tools,
                 remark=remark
             )

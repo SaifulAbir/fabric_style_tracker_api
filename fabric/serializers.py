@@ -15,7 +15,7 @@ class FabricSerializer(ModelSerializer):
     class Meta:
         model = Fabric
         model_fields = ['dekko_reference', 'mill_reference', 'supplier', 'fabric_type', 'composition',
-                        'construction', 'shrinkage', 'weight', 'cuttable_width', 'price', 'moq', 'lead_time', 'availability', 'marketing_tools', 'remark']
+                        'construction', 'shrinkage', 'weight', 'cuttable_width', 'price', 'moq', 'lead_time', 'initial_availability', 'marketing_tools', 'remark']
         extra_fields = ['ends_per_inch', 'picks_per_inch', 'warp_count', 'weft_count', 'warp', 'weft']
         fields = model_fields + extra_fields
         extra_kwargs = {"construction": {"required": False},
@@ -56,7 +56,7 @@ class FabricListSerializer(ModelSerializer):
         fields = ('id', 'dekko_reference', 'mill_reference', 'supplier', 'supplier_name', 'fabric_type',
                   'fabric_type_name', 'fabric_composition', 'composition', 'fabric_construction', 'ends_per_inch',
                   'picks_per_inch', 'warp_count', 'weft_count', 'warp', 'weft', 'weight', 'cuttable_width', 'price',
-                  'moq', 'lead_time', 'availability', 'marketing_tools', 'remark', 'barcode', 'code')
+                  'moq', 'lead_time', 'initial_availability', 'marketing_tools', 'remark', 'barcode', 'code')
 
 
 class FiberPercentageSerializer(ModelSerializer):

@@ -38,10 +38,28 @@ def FabricCreateFromExcelAPI(request):
     excel_data = request.data
     new_entry = 0
     total_data = 0
+    percentage_check = 0
 
     for key in excel_data:
         fiber_percentages = []
+        total_percentage = 0
         total_data += 1
+
+        if len(key) < 24:
+            total_data -= 1
+            continue
+
+        if key[4] != None:
+            total_percentage += key[4]
+        if key[6] != None:
+            total_percentage += key[6]
+        if key[8] != None:
+            total_percentage += key[8]
+
+        if total_percentage > 100 or total_percentage < 100:
+            percentage_check += 1
+            continue
+
         mill_reference = key[0]
         dekko_reference = "DI-" + str(mill_reference)[::-1]
         supplier = key[1]
@@ -171,7 +189,10 @@ def FabricCreateFromExcelAPI(request):
     if new_entry == 0:
         message = "Sheet is up to date."
     else:
-        message = "{} row added out of {}.".format(new_entry, total_data)
+        if percentage_check > 0:
+            message = "{} row added out of {} and {} row percentage is not 100%.".format(new_entry, total_data, percentage_check)
+        else:
+            message = "{} row added out of {}.".format(new_entry, total_data)
     data = {
         'status': 'success',
         'code': HTTP_200_OK,

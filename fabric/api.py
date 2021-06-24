@@ -22,7 +22,7 @@ class FabricCreateAPI(CreateAPIView):
 class DownloadFabricExcelFormat(generics.RetrieveAPIView):
 
     def get(self, request, *args, **kwargs):
-        file_path = os.path.join(STATIC_DIR, 'fabric_excel_format.xlsx')
+        file_path = os.path.join(STATIC_DIR, 'fabric_excel_format/fabric_excel_format.xlsx')
         if file_path:
             with open(file_path, 'rb') as fh:
                 response = HttpResponse(fh.read())
@@ -43,29 +43,29 @@ def FabricCreateFromExcelAPI(request):
         fiber_percentages = []
         total_data += 1
         mill_reference = key[0]
-        dekko_reference = key[1]
-        supplier = key[2]
-        fabric_type = key[3]
-        fiber1 = key[4]
-        percentage1 = key[5]
-        fiber2 = key[6]
-        percentage2 = key[7]
-        fiber3 = key[8]
-        percentage3 = key[9]
-        ends_per_inch = key[10]
-        picks_per_inch = key[11]
-        warp_count = key[12]
-        weft_count = key[13]
-        warp = key[14]
-        weft = key[15]
-        weight = key[16]
-        cuttable_width = key[17]
-        price = key[18]
-        moq = key[19]
-        lead_time = key[20]
-        initial_availability = key[21]
-        marketing_tools = key[22]
-        remark = key[23]
+        dekko_reference = "DI-" + str(mill_reference)[::-1]
+        supplier = key[1]
+        fabric_type = key[2]
+        fiber1 = key[3]
+        percentage1 = key[4]
+        fiber2 = key[5]
+        percentage2 = key[6]
+        fiber3 = key[7]
+        percentage3 = key[8]
+        ends_per_inch = key[9]
+        picks_per_inch = key[10]
+        warp_count = key[11]
+        weft_count = key[12]
+        warp = key[13]
+        weft = key[14]
+        weight = key[15]
+        cuttable_width = key[16]
+        price = key[17]
+        moq = key[18]
+        lead_time = key[19]
+        initial_availability = key[20]
+        marketing_tools = key[21]
+        remark = key[22]
 
         if not Fabric.objects.filter(mill_reference=mill_reference).exists():
             new_entry += 1

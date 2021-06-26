@@ -22,6 +22,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('fabric.urls')),
     path('api/', include('supplier.urls')),
+    path('api/', include('style.urls')),
 ]
 
 if settings.DEBUG:

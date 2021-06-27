@@ -43,3 +43,18 @@ class StyleSerializer(ModelSerializer):
         WashType.objects.filter(id=instance.wash_type.id).update(name=validated_data.pop('wash_type'))
         validated_data.update({"wash_type": instance.wash_type})
         return super().update(instance, validated_data)
+
+
+class StyleListSerializer(ModelSerializer):
+    fabric_name = serializers.CharField(source='fabric.fabric_type')
+    wash_type_name = serializers.CharField(source='wash_type.name')
+
+    class Meta:
+        model = Style
+        fields = ('name', 'fabric', 'fabric_name', 'wash_type', 'wash_type_name', 'designer', 'fob', 'remark')
+
+
+class WashTypeListSerializer(ModelSerializer):
+    class Meta:
+        model = WashType
+        fields = ['name']

@@ -309,28 +309,28 @@ class DashboardAPI(RetrieveAPIView):
             "style_count": style_count,
             "fabric_monthly_count": [
                 {
-                    "month_ways_fabric_count": fabric_current_month_count,
-                    "month": this_month.strftime("%B")
+                    "month_wise_fabric_count": fabric_sixth_last_month_count,
+                    "month": (this_month - relativedelta(months=5)).strftime("%B")
                 },
                 {
-                    "month_ways_fabric_count": fabric_second_last_month_count,
-                    "month": previous_month.strftime("%B")
-                 },
-                {
-                    "month_ways_fabric_count": fabric_third_last_month_count,
-                    "month": (this_month - relativedelta(months=2)).strftime("%B")
-                },
-                {
-                    "month_ways_fabric_count": fabric_fourth_last_month_count,
-                    "month": (this_month - relativedelta(months=3)).strftime("%B")
-                },
-                {
-                    "month_ways_fabric_count": fabric_fifth_last_month_count,
+                    "month_wise_fabric_count": fabric_fifth_last_month_count,
                     "month": (this_month - relativedelta(months=4)).strftime("%B")
                 },
                 {
-                    "month_ways_fabric_count": fabric_sixth_last_month_count,
-                    "month": (this_month - relativedelta(months=5)).strftime("%B")
+                    "month_wise_fabric_count": fabric_fourth_last_month_count,
+                    "month": (this_month - relativedelta(months=3)).strftime("%B")
+                },
+                {
+                    "month_wise_fabric_count": fabric_third_last_month_count,
+                    "month": (this_month - relativedelta(months=2)).strftime("%B")
+                },
+                {
+                    "month_wise_fabric_count": fabric_second_last_month_count,
+                    "month": previous_month.strftime("%B")
+                },
+                {
+                    "month_wise_fabric_count": fabric_current_month_count,
+                    "month": this_month.strftime("%B")
                 }
             ]
         })

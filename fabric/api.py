@@ -1,8 +1,9 @@
+import datetime
 from collections import Counter
-
+from dateutil.relativedelta import relativedelta
 from django.http import HttpResponse, Http404
 from rest_framework import generics
-from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView
 from fabric.models import Fabric, FabricComposition, FabricType, FiberPercentage, Fiber, FiberComposition, \
     FabricConstruction, Shrinkage
 from fabric.serializers import FabricSerializer, FabricCompositionSerializer, FabricTypeSerializer, \
@@ -12,8 +13,10 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
 
 from fabric_sample_tracker_api.settings import STATIC_DIR
+from style.models import Style
 from supplier.models import Supplier
 from supplier.api import SupplierListAPI
+
 import os
 
 class FabricCreateAPI(CreateAPIView):
@@ -275,3 +278,59 @@ class FabricCompositionCreateAPI(CreateAPIView):
 class FabricCompositionUpdateAPI(UpdateAPIView):
     queryset = FabricComposition.objects.all()
     serializer_class = FabricCompositionSerializer
+
+
+class DashboardAPI(RetrieveAPIView):
+    def get(self, request, *args, **kwargs):
+        fabric_count = Fabric.objects.filter(is_archived=False).count()
+        style_count = Style.objects.filter(is_archived=False).count()
+        this_month = datetime.date.today().replace(day=1)
+        fabric_current_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month).count()
+
+        month_before = 1
+        previous_month = this_month - relativedelta(months=month_before)
+        fabric_second_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=previous_month,
+                                                               created_at__lt=this_month).count()
+
+        fabric_third_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month - relativedelta(months=2),
+                                                      created_at__lt=previous_month).count()
+
+        fabric_fourth_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month - relativedelta(months=3),
+                                                              created_at__lt=this_month - relativedelta(months=2)).count()
+
+        fabric_fifth_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month - relativedelta(months=4),
+                                                              created_at__lt=this_month - relativedelta(months=3)).count()
+
+        fabric_sixth_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month - relativedelta(months=5),
+                                                              created_at__lt=this_month - relativedelta(months=4)).count()
+
+        return Response(data={
+            "fabric_count": fabric_count,
+            "style_count": style_count,
+            "fabric_monthly_count": [
+                {
+                    "month_ways_fabric_count": fabric_current_month_count,
+                    "month": this_month.strftime("%B")
+                },
+                {
+                    "month_ways_fabric_count": fabric_second_last_month_count,
+                    "month": previous_month.strftime("%B")
+                 },
+                {
+                    "month_ways_fabric_count": fabric_third_last_month_count,
+                    "month": (this_month - relativedelta(months=2)).strftime("%B")
+                },
+                {
+                    "month_ways_fabric_count": fabric_fourth_last_month_count,
+                    "month": (this_month - relativedelta(months=3)).strftime("%B")
+                },
+                {
+                    "month_ways_fabric_count": fabric_fifth_last_month_count,
+                    "month": (this_month - relativedelta(months=4)).strftime("%B")
+                },
+                {
+                    "month_ways_fabric_count": fabric_sixth_last_month_count,
+                    "month": (this_month - relativedelta(months=5)).strftime("%B")
+                }
+            ]
+        })

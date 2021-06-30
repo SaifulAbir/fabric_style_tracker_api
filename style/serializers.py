@@ -48,13 +48,14 @@ class StyleSerializer(ModelSerializer):
 class StyleListSerializer(ModelSerializer):
     fabric_name = serializers.CharField(source='fabric.fabric_type')
     wash_type_name = serializers.CharField(source='wash_type.name')
+    used_yds = serializers.CharField(source='fabric_details.used_yds')
 
     class Meta:
         model = Style
-        fields = ('name', 'fabric', 'fabric_name', 'wash_type', 'wash_type_name', 'designer', 'fob', 'remark')
+        fields = ('name', 'fabric', 'fabric_name', 'used_yds', 'wash_type', 'wash_type_name', 'designer', 'fob', 'remark')
 
 
 class WashTypeListSerializer(ModelSerializer):
     class Meta:
         model = WashType
-        fields = ['name']
+        fields = ['id', 'name']

@@ -22,5 +22,5 @@ urlpatterns = [
     path('fiber_percentage/list/', FiberPercentageListAPI.as_view()),
     path('fiber_percentage/create/', FiberPercentageCreateAPI.as_view()),
     path('fiber_percentage/update/<str:pk>/', FiberPercentageUpdateAPI.as_view()),
-    path('dashboard_api/', DashboardAPI.as_view()),
+    path('dashboard/', DashboardAPI.as_view()),
 ]

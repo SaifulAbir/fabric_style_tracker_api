@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-from style.models import Style, WashType
+from style.models import Style, WashType, Designer
 from fabric.models import FabricDetail
 
 
@@ -62,10 +62,11 @@ class StyleListSerializer(ModelSerializer):
     fabric_marketing_tools = serializers.CharField(source='fabric.marketing_tools')
     wash_type_name = serializers.CharField(source='wash_type.name')
     used_yds = serializers.CharField(source='fabric_details.used_yds')
+    designer_name = serializers.CharField(source='designer.name')
 
     class Meta:
         model = Style
-        fields = ('id', 'name', 'fabric_dekko_reference', 'used_yds', 'wash_type', 'wash_type_name', 'designer', 'fob', 'remark', 'barcode', 'code',
+        fields = ('id', 'name', 'fabric_dekko_reference', 'used_yds', 'wash_type', 'wash_type_name', 'designer', 'designer_name', 'fob', 'remark', 'barcode', 'code',
                   'fabric_mill_reference', 'fabric_supplier', 'fabric_fabric_type', 'fabric_composition', 'fabric_construction', 'fabric_shrinkage',
                   'fabric_weight', 'fabric_cuttable_width', 'fabric_price', 'fabric_moq', 'fabric_lead_time', 'fabric_last_availability', 'fabric_marketing_tools')
 
@@ -73,4 +74,10 @@ class StyleListSerializer(ModelSerializer):
 class WashTypeListSerializer(ModelSerializer):
     class Meta:
         model = WashType
+        fields = ['id', 'name']
+
+
+class DesignerListSerializer(ModelSerializer):
+    class Meta:
+        model = Designer
         fields = ['id', 'name']

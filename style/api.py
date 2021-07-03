@@ -1,5 +1,5 @@
-from style.models import Style, WashType
-from style.serializers import StyleSerializer, StyleListSerializer, WashTypeListSerializer
+from style.models import Style, WashType, Designer
+from style.serializers import StyleSerializer, StyleListSerializer, WashTypeListSerializer, DesignerListSerializer
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
 
 
@@ -20,3 +20,8 @@ class StyleUpdateAPI(UpdateAPIView):
 class WashTypeListAPI(ListAPIView):
     queryset = WashType.objects.filter(is_archived=False)
     serializer_class = WashTypeListSerializer
+
+
+class DesignerListAPI(ListAPIView):
+    queryset = Designer.objects.filter(is_archived=False)
+    serializer_class = DesignerListSerializer

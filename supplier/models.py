@@ -1,5 +1,7 @@
 from django.db import models
-from fabric_sample_tracker_api.models import FabricSampleTrackerModel
+from django.db.models.signals import pre_save
+
+from fabric_sample_tracker_api.models import FabricSampleTrackerModel, populate_time_info
 from resources import strings_supplier
 
 
@@ -46,3 +48,6 @@ class Supplier(FabricSampleTrackerModel):
 
     def __str__(self):
         return self.name
+
+pre_save.connect(populate_time_info, sender=Supplier)
+pre_save.connect(populate_time_info, sender=SupplierType)

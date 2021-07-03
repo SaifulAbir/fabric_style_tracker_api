@@ -283,29 +283,54 @@ class FabricCompositionUpdateAPI(UpdateAPIView):
 class DashboardAPI(RetrieveAPIView):
     def get(self, request, *args, **kwargs):
         fabric_count = Fabric.objects.filter(is_archived=False).count()
+        supplier_count = Supplier.objects.filter(is_archived=False).count()
         style_count = Style.objects.filter(is_archived=False).count()
         this_month = datetime.date.today().replace(day=1)
         fabric_current_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month).count()
+        supplier_current_month_count = Supplier.objects.filter(is_archived=False, created_at__gte=this_month).count()
 
         month_before = 1
         previous_month = this_month - relativedelta(months=month_before)
         fabric_second_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=previous_month,
                                                                created_at__lt=this_month).count()
 
+        supplier_second_last_month_count = Supplier.objects.filter(is_archived=False, created_at__gte=previous_month,
+                                                               created_at__lt=this_month).count()
+
         fabric_third_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month - relativedelta(months=2),
                                                       created_at__lt=previous_month).count()
+
+        supplier_third_last_month_count = Supplier.objects.filter(is_archived=False,
+                                                              created_at__gte=this_month - relativedelta(months=2),
+                                                              created_at__lt=previous_month).count()
 
         fabric_fourth_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month - relativedelta(months=3),
                                                               created_at__lt=this_month - relativedelta(months=2)).count()
 
+        supplier_fourth_last_month_count = Supplier.objects.filter(is_archived=False,
+                                                               created_at__gte=this_month - relativedelta(months=3),
+                                                               created_at__lt=this_month - relativedelta(
+                                                                   months=2)).count()
+
         fabric_fifth_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month - relativedelta(months=4),
                                                               created_at__lt=this_month - relativedelta(months=3)).count()
+
+        supplier_fifth_last_month_count = Supplier.objects.filter(is_archived=False,
+                                                              created_at__gte=this_month - relativedelta(months=4),
+                                                              created_at__lt=this_month - relativedelta(
+                                                                  months=3)).count()
 
         fabric_sixth_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month - relativedelta(months=5),
                                                               created_at__lt=this_month - relativedelta(months=4)).count()
 
+        supplier_sixth_last_month_count = Supplier.objects.filter(is_archived=False,
+                                                              created_at__gte=this_month - relativedelta(months=5),
+                                                              created_at__lt=this_month - relativedelta(
+                                                                  months=4)).count()
+
         return Response(data={
             "fabric_count": fabric_count,
+            "supplier_count": supplier_count,
             "style_count": style_count,
             "fabric_monthly_count": [
                 {
@@ -330,6 +355,32 @@ class DashboardAPI(RetrieveAPIView):
                 },
                 {
                     "month_wise_fabric_count": fabric_current_month_count,
+                    "month": this_month.strftime("%B")
+                }
+            ],
+            "supplier_monthly_count": [
+                {
+                    "month_wise_supplier_count": supplier_sixth_last_month_count,
+                    "month": (this_month - relativedelta(months=5)).strftime("%B")
+                },
+                {
+                    "month_wise_supplier_count": supplier_fifth_last_month_count,
+                    "month": (this_month - relativedelta(months=4)).strftime("%B")
+                },
+                {
+                    "month_wise_supplier_count": supplier_fourth_last_month_count,
+                    "month": (this_month - relativedelta(months=3)).strftime("%B")
+                },
+                {
+                    "month_wise_supplier_count": supplier_third_last_month_count,
+                    "month": (this_month - relativedelta(months=2)).strftime("%B")
+                },
+                {
+                    "month_wise_supplier_count": supplier_second_last_month_count,
+                    "month": previous_month.strftime("%B")
+                },
+                {
+                    "month_wise_supplier_count": supplier_current_month_count,
                     "month": this_month.strftime("%B")
                 }
             ]

@@ -14,6 +14,7 @@ class WashType(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_style.WASH_TYPE_VERBOSE_NAME
         verbose_name_plural = strings_style.WASH_TYPE_VERBOSE_NAME_PLURAL
         db_table = 'wash_types'
@@ -26,6 +27,7 @@ class Designer(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_style.DESIGNER_VERBOSE_NAME
         verbose_name_plural = strings_style.DESIGNER_VERBOSE_NAME_PLURAL
         db_table = 'designer'
@@ -46,6 +48,7 @@ class Style(FabricSampleTrackerModel):
     remark = models.TextField(null=True, blank=True)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_style.STYLE_VERBOSE_NAME
         verbose_name_plural = strings_style.STYLE_VERBOSE_NAME_PLURAL
         db_table = 'styles'

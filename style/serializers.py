@@ -46,13 +46,28 @@ class StyleSerializer(ModelSerializer):
 
 
 class StyleListSerializer(ModelSerializer):
-    fabric_name = serializers.CharField(source='fabric.fabric_type')
+    fabric_dekko_reference = serializers.CharField(source='fabric.dekko_reference')
+    fabric_mill_reference = serializers.CharField(source='fabric.mill_reference')
+    fabric_supplier = serializers.CharField(source='fabric.supplier')
+    fabric_fabric_type = serializers.CharField(source='fabric.fabric_type')
+    fabric_composition = serializers.CharField(source='fabric.composition')
+    fabric_construction = serializers.CharField(source='fabric.construction')
+    fabric_shrinkage = serializers.CharField(source='fabric.shrinkage')
+    fabric_weight = serializers.CharField(source='fabric.weight')
+    fabric_cuttable_width = serializers.CharField(source='fabric.cuttable_width')
+    fabric_price = serializers.CharField(source='fabric.price')
+    fabric_moq = serializers.CharField(source='fabric.moq')
+    fabric_lead_time = serializers.CharField(source='fabric.lead_time')
+    fabric_last_availability = serializers.CharField(source='fabric.last_availability')
+    fabric_marketing_tools = serializers.CharField(source='fabric.marketing_tools')
     wash_type_name = serializers.CharField(source='wash_type.name')
     used_yds = serializers.CharField(source='fabric_details.used_yds')
 
     class Meta:
         model = Style
-        fields = ('name', 'fabric', 'fabric_name', 'used_yds', 'wash_type', 'wash_type_name', 'designer', 'fob', 'remark')
+        fields = ('id', 'name', 'fabric_dekko_reference', 'used_yds', 'wash_type', 'wash_type_name', 'designer', 'fob', 'remark',
+                  'fabric_mill_reference', 'fabric_supplier', 'fabric_fabric_type', 'fabric_composition', 'fabric_construction', 'fabric_shrinkage',
+                  'fabric_weight', 'fabric_cuttable_width', 'fabric_price', 'fabric_moq', 'fabric_lead_time', 'fabric_last_availability', 'fabric_marketing_tools')
 
 
 class WashTypeListSerializer(ModelSerializer):

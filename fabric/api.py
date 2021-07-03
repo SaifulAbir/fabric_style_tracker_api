@@ -288,6 +288,7 @@ class DashboardAPI(RetrieveAPIView):
         this_month = datetime.date.today().replace(day=1)
         fabric_current_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month).count()
         supplier_current_month_count = Supplier.objects.filter(is_archived=False, created_at__gte=this_month).count()
+        style_current_month_count = Style.objects.filter(is_archived=False, created_at__gte=this_month).count()
 
         month_before = 1
         previous_month = this_month - relativedelta(months=month_before)
@@ -297,12 +298,19 @@ class DashboardAPI(RetrieveAPIView):
         supplier_second_last_month_count = Supplier.objects.filter(is_archived=False, created_at__gte=previous_month,
                                                                created_at__lt=this_month).count()
 
+        style_second_last_month_count = Style.objects.filter(is_archived=False, created_at__gte=previous_month,
+                                                               created_at__lt=this_month).count()
+
         fabric_third_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month - relativedelta(months=2),
                                                       created_at__lt=previous_month).count()
 
         supplier_third_last_month_count = Supplier.objects.filter(is_archived=False,
                                                               created_at__gte=this_month - relativedelta(months=2),
                                                               created_at__lt=previous_month).count()
+
+        style_third_last_month_count = Style.objects.filter(is_archived=False,
+                                                                  created_at__gte=this_month - relativedelta(months=2),
+                                                                  created_at__lt=previous_month).count()
 
         fabric_fourth_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month - relativedelta(months=3),
                                                               created_at__lt=this_month - relativedelta(months=2)).count()
@@ -312,6 +320,11 @@ class DashboardAPI(RetrieveAPIView):
                                                                created_at__lt=this_month - relativedelta(
                                                                    months=2)).count()
 
+        style_fourth_last_month_count = Style.objects.filter(is_archived=False,
+                                                                   created_at__gte=this_month - relativedelta(months=3),
+                                                                   created_at__lt=this_month - relativedelta(
+                                                                       months=2)).count()
+
         fabric_fifth_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month - relativedelta(months=4),
                                                               created_at__lt=this_month - relativedelta(months=3)).count()
 
@@ -320,6 +333,11 @@ class DashboardAPI(RetrieveAPIView):
                                                               created_at__lt=this_month - relativedelta(
                                                                   months=3)).count()
 
+        style_fifth_last_month_count = Style.objects.filter(is_archived=False,
+                                                                  created_at__gte=this_month - relativedelta(months=4),
+                                                                  created_at__lt=this_month - relativedelta(
+                                                                      months=3)).count()
+
         fabric_sixth_last_month_count = Fabric.objects.filter(is_archived=False, created_at__gte=this_month - relativedelta(months=5),
                                                               created_at__lt=this_month - relativedelta(months=4)).count()
 
@@ -327,6 +345,11 @@ class DashboardAPI(RetrieveAPIView):
                                                               created_at__gte=this_month - relativedelta(months=5),
                                                               created_at__lt=this_month - relativedelta(
                                                                   months=4)).count()
+
+        style_sixth_last_month_count = Style.objects.filter(is_archived=False,
+                                                                  created_at__gte=this_month - relativedelta(months=5),
+                                                                  created_at__lt=this_month - relativedelta(
+                                                                      months=4)).count()
 
         return Response(data={
             "fabric_count": fabric_count,
@@ -381,6 +404,32 @@ class DashboardAPI(RetrieveAPIView):
                 },
                 {
                     "month_wise_supplier_count": supplier_current_month_count,
+                    "month": this_month.strftime("%B")
+                }
+            ],
+            "style_monthly_count": [
+                {
+                    "month_wise_style_count": style_sixth_last_month_count,
+                    "month": (this_month - relativedelta(months=5)).strftime("%B")
+                },
+                {
+                    "month_wise_style_count": style_fifth_last_month_count,
+                    "month": (this_month - relativedelta(months=4)).strftime("%B")
+                },
+                {
+                    "month_wise_style_count": style_fourth_last_month_count,
+                    "month": (this_month - relativedelta(months=3)).strftime("%B")
+                },
+                {
+                    "month_wise_style_count": style_third_last_month_count,
+                    "month": (this_month - relativedelta(months=2)).strftime("%B")
+                },
+                {
+                    "month_wise_style_count": style_second_last_month_count,
+                    "month": previous_month.strftime("%B")
+                },
+                {
+                    "month_wise_style_count": style_current_month_count,
                     "month": this_month.strftime("%B")
                 }
             ]

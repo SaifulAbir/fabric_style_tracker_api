@@ -40,8 +40,6 @@ class StyleSerializer(ModelSerializer):
         return style_instance
 
     def update(self, instance, validated_data):
-        WashType.objects.filter(id=instance.wash_type.id).update(name=validated_data.pop('wash_type'))
-        validated_data.update({"wash_type": instance.wash_type})
         return super().update(instance, validated_data)
 
 
@@ -66,7 +64,7 @@ class StyleListSerializer(ModelSerializer):
 
     class Meta:
         model = Style
-        fields = ('id', 'name', 'fabric_dekko_reference', 'used_yds', 'wash_type', 'wash_type_name', 'designer', 'designer_name', 'fob', 'remark', 'barcode', 'code',
+        fields = ('id', 'name', 'fabric', 'fabric_dekko_reference', 'used_yds', 'wash_type', 'wash_type_name', 'designer', 'designer_name', 'fob', 'remark', 'barcode', 'code',
                   'fabric_mill_reference', 'fabric_supplier', 'fabric_fabric_type', 'fabric_composition', 'fabric_construction', 'fabric_shrinkage',
                   'fabric_weight', 'fabric_cuttable_width', 'fabric_price', 'fabric_moq', 'fabric_lead_time', 'fabric_last_availability', 'fabric_marketing_tools')
 

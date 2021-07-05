@@ -7,10 +7,11 @@ from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, R
 from fabric.models import Fabric, FabricComposition, FabricType, FiberPercentage, Fiber, FiberComposition, \
     FabricConstruction, Shrinkage
 from fabric.serializers import FabricSerializer, FabricCompositionSerializer, FabricTypeSerializer, \
-    FabricListSerializer, FiberPercentageSerializer, FiberSerializer
+    FabricListAndDetailSerializer, FiberPercentageSerializer, FiberSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
+from rest_framework.views import APIView
 
 from fabric_sample_tracker_api.settings import STATIC_DIR
 from style.models import Style
@@ -213,7 +214,7 @@ class FabricListAPI(ListAPIView):
     queryset = Fabric.objects.filter(
         is_archived=False
     )
-    serializer_class = FabricListSerializer
+    serializer_class = FabricListAndDetailSerializer
 
 
 class FabricCompositionListAPI(ListAPIView):
@@ -434,3 +435,8 @@ class DashboardAPI(RetrieveAPIView):
                 }
             ]
         })
+
+
+class FabricDetailAPI(RetrieveAPIView):
+    queryset = Fabric.objects.filter(is_archived=False)
+    serializer_class = FabricListAndDetailSerializer

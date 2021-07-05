@@ -14,6 +14,7 @@ class FabricType(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_fabric.FABRIC_TYPE_VERBOSE_NAME
         verbose_name_plural = strings_fabric.FABRIC_TYPE_VERBOSE_NAME_PLURAL
         db_table = 'fabric_types'
@@ -26,6 +27,7 @@ class Fiber(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_fabric.FIBER_VERBOSE_NAME
         verbose_name_plural = strings_fabric.FIBER_VERBOSE_NAME_PLURAL
         db_table = 'fibers'
@@ -39,6 +41,7 @@ class FiberPercentage(FabricSampleTrackerModel):
     percentage = models.PositiveIntegerField()
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_fabric.FIBER_PERCENTAGE_VERBOSE_NAME
         verbose_name_plural = strings_fabric.FIBER_PERCENTAGE_VERBOSE_NAME_PLURAL
         unique_together = ('fiber', 'percentage',)
@@ -56,6 +59,7 @@ class FabricComposition(FabricSampleTrackerModel):
     fiber_percentages = models.ManyToManyField(FiberPercentage, through="FiberComposition")
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_fabric.FABRIC_COMPOSITION_VERBOSE_NAME
         verbose_name_plural = strings_fabric.FABRIC_COMPOSITION_VERBOSE_NAME_PLURAL
         db_table = 'fabric_compositions'
@@ -72,6 +76,7 @@ class FiberComposition(FabricSampleTrackerModel):
     fabric_composition = models.ForeignKey(FabricComposition, on_delete=models.PROTECT)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_fabric.FIBER_COMPOSITION_VERBOSE_NAME
         verbose_name_plural = strings_fabric.FIBER_COMPOSITION_VERBOSE_NAME_PLURAL
         unique_together = ('fiber_percentage', 'fabric_composition',)
@@ -85,6 +90,7 @@ class FabricConstruction(FabricSampleTrackerModel):
     weft_count = models.PositiveIntegerField()
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_fabric.FABRIC_CONSTRUCTION_VERBOSE_NAME
         verbose_name_plural = strings_fabric.FABRIC_CONSTRUCTION_VERBOSE_NAME_PLURAL
         db_table = 'fabric_constructions'
@@ -98,6 +104,7 @@ class Shrinkage(FabricSampleTrackerModel):
     weft = models.PositiveIntegerField()
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_fabric.SHRINKAGE_VERBOSE_NAME
         verbose_name_plural = strings_fabric.SHRINKAGE_VERBOSE_NAME_PLURAL
         db_table = 'shrinkage'
@@ -127,6 +134,7 @@ class Fabric(FabricSampleTrackerModel):
     remark = models.TextField(null=True, blank=True)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_fabric.FABRIC_VERBOSE_NAME
         verbose_name_plural = strings_fabric.FABRIC_VERBOSE_NAME_PLURAL
         db_table = 'fabrics'
@@ -157,6 +165,7 @@ class FabricDetail(FabricSampleTrackerModel):
     last_availability = models.PositiveIntegerField(null=True, blank=True)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_fabric.FABRIC_DETAIL_VERBOSE_NAME
         verbose_name_plural = strings_fabric.FABRIC_DETAIL_VERBOSE_NAME_PLURAL
         db_table = 'fabric_details'

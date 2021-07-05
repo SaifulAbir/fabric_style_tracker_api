@@ -9,6 +9,7 @@ class SupplierType(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_supplier.SUPPLIER_TYPE_VERBOSE_NAME
         verbose_name_plural = strings_supplier.SUPPLIER_TYPE_VERBOSE_NAME_PLURAL
         db_table = 'supplier_types'
@@ -21,6 +22,7 @@ class Country(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_supplier.COUNTRY_VERBOSE_NAME
         verbose_name_plural = strings_supplier.COUNTRY_VERBOSE_NAME_PLURAL
         db_table = 'countries'
@@ -42,6 +44,7 @@ class Supplier(FabricSampleTrackerModel):
     supplier_address = models.TextField()
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_supplier.SUPPLIER_VERBOSE_NAME
         verbose_name_plural = strings_supplier.SUPPLIER_VERBOSE_NAME_PLURAL
         db_table = 'suppliers'

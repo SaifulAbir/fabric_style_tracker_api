@@ -14,9 +14,23 @@ class WashType(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_style.WASH_TYPE_VERBOSE_NAME
         verbose_name_plural = strings_style.WASH_TYPE_VERBOSE_NAME_PLURAL
         db_table = 'wash_types'
+
+    def __str__(self):
+        return self.name
+
+
+class Designer(FabricSampleTrackerModel):
+    name = models.CharField(max_length=255, unique=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = strings_style.DESIGNER_VERBOSE_NAME
+        verbose_name_plural = strings_style.DESIGNER_VERBOSE_NAME_PLURAL
+        db_table = 'designer'
 
     def __str__(self):
         return self.name
@@ -27,13 +41,14 @@ class Style(FabricSampleTrackerModel):
     fabric = models.ForeignKey(Fabric, on_delete=models.PROTECT, db_column='fabric')
     fabric_details = models.ForeignKey(FabricDetail, on_delete=models.PROTECT, db_column='fabric_details')
     wash_type = models.ForeignKey(WashType, on_delete=models.PROTECT, db_column='wash_type')
-    designer = models.CharField(max_length=255)
+    designer = models.ForeignKey(Designer, on_delete=models.PROTECT, db_column='designer')
     fob = models.PositiveIntegerField()
     code = models.CharField(max_length=13, blank=True)
     barcode = models.ImageField(upload_to="images/", blank=True)
     remark = models.TextField(null=True, blank=True)
 
     class Meta:
+        ordering = ['-created_at']
         verbose_name = strings_style.STYLE_VERBOSE_NAME
         verbose_name_plural = strings_style.STYLE_VERBOSE_NAME_PLURAL
         db_table = 'styles'
@@ -55,3 +70,4 @@ def style_pre_save_receiver(sender, instance, *args, **kwargs):
 pre_save.connect(populate_time_info, sender=Style)
 pre_save.connect(style_pre_save_receiver, sender=Style)
 pre_save.connect(populate_time_info, sender=WashType)
+pre_save.connect(populate_time_info, sender=Designer)

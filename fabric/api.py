@@ -355,6 +355,38 @@ class DashboardAPI(RetrieveAPIView):
             "fabric_count": fabric_count,
             "supplier_count": supplier_count,
             "style_count": style_count,
+            "fabric_style_monthly_count": [
+                {
+                    "month": (this_month - relativedelta(months=5)).strftime("%B"),
+                    "fabric": fabric_sixth_last_month_count,
+                    "style": style_sixth_last_month_count,
+                },
+                {
+                    "month": (this_month - relativedelta(months=4)).strftime("%B"),
+                    "fabric": fabric_fifth_last_month_count,
+                    "style": style_fifth_last_month_count,
+                },
+                {
+                    "month": (this_month - relativedelta(months=3)).strftime("%B"),
+                    "fabric": fabric_fourth_last_month_count,
+                    "style": style_fourth_last_month_count,
+                },
+                {
+                    "month": (this_month - relativedelta(months=2)).strftime("%B"),
+                    "fabric": fabric_third_last_month_count,
+                    "style": style_third_last_month_count,
+                },
+                {
+                    "month": previous_month.strftime("%B"),
+                    "fabric": fabric_second_last_month_count,
+                    "style": style_second_last_month_count,
+                },
+                {
+                    "month": this_month.strftime("%B"),
+                    "fabric": fabric_current_month_count,
+                    "style": style_current_month_count,
+                },
+            ],
             "fabric_monthly_count": [
                 {
                     "month_wise_fabric_count": fabric_sixth_last_month_count,

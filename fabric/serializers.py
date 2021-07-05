@@ -42,7 +42,7 @@ class FabricSerializer(ModelSerializer):
         return super().update(instance, validated_data)
 
 
-class FabricListSerializer(ModelSerializer):
+class FabricListAndDetailSerializer(ModelSerializer):
     supplier_name = serializers.CharField(source='supplier.name')
     fabric_type_name = serializers.CharField(source='fabric_type.name')
     ends_per_inch = serializers.CharField(source='construction.ends_per_inch')

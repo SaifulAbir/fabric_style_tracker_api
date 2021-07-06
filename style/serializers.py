@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
-from style.models import Style, WashType, Designer
+from style.models import Style, WashType, Designer, Property
 from fabric.models import FabricDetail
 
 
@@ -78,4 +78,10 @@ class WashTypeListSerializer(ModelSerializer):
 class DesignerListSerializer(ModelSerializer):
     class Meta:
         model = Designer
+        fields = ['id', 'name']
+
+
+class PropertyListSerializer(ModelSerializer):
+    class Meta:
+        model = Property
         fields = ['id', 'name']

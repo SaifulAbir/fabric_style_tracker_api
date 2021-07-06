@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 from fabric.models import Fabric, FabricComposition, FabricType, FabricConstruction, Shrinkage, FiberPercentage, \
-    FiberComposition, Fiber
+    FiberComposition, Fiber, Weave, Appearance
 
 
 class FabricSerializer(ModelSerializer):
@@ -102,4 +102,16 @@ class FabricCompositionSerializer(ModelSerializer):
 class FabricTypeSerializer(ModelSerializer):
     class Meta:
         model = FabricType
+        fields = ('id', 'name')
+
+
+class WeaveSerializer(ModelSerializer):
+    class Meta:
+        model = Weave
+        fields = ('id', 'name')
+
+
+class AppearanceSerializer(ModelSerializer):
+    class Meta:
+        model = Appearance
         fields = ('id', 'name')

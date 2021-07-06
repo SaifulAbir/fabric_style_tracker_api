@@ -2,7 +2,8 @@ from django.urls import path
 from fabric.api import FabricCreateAPI, FabricListAPI, FabricCompositionListAPI, FabricTypeListAPI, \
     FabricUpdateAPI, FabricTypeCreateAPI, FabricTypeUpdateAPI, FabricCompositionCreateAPI, FiberPercentageListAPI, \
     FiberPercentageCreateAPI, FiberPercentageUpdateAPI, FiberListAPI, FabricCompositionUpdateAPI, FiberCreateAPI, \
-    FiberUpdateAPI, FabricCreateFromExcelAPI, DownloadFabricExcelFormat, DashboardAPI, FabricDetailAPI
+    FiberUpdateAPI, FabricCreateFromExcelAPI, DownloadFabricExcelFormat, DashboardAPI, FabricDetailAPI, \
+    AppearanceListAPI, WeaveListAPI
 
 urlpatterns = [
     path('fabric/create/', FabricCreateAPI.as_view()),
@@ -24,4 +25,6 @@ urlpatterns = [
     path('fiber_percentage/create/', FiberPercentageCreateAPI.as_view()),
     path('fiber_percentage/update/<str:pk>/', FiberPercentageUpdateAPI.as_view()),
     path('dashboard/', DashboardAPI.as_view()),
+    path('weave/list/', WeaveListAPI.as_view()),
+    path('appearance/list/', AppearanceListAPI.as_view()),
 ]

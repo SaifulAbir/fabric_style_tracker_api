@@ -5,9 +5,9 @@ from django.http import HttpResponse, Http404
 from rest_framework import generics
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView, RetrieveAPIView
 from fabric.models import Fabric, FabricComposition, FabricType, FiberPercentage, Fiber, FiberComposition, \
-    FabricConstruction, Shrinkage
+    FabricConstruction, Shrinkage, Weave, Appearance
 from fabric.serializers import FabricSerializer, FabricCompositionSerializer, FabricTypeSerializer, \
-    FabricListAndDetailSerializer, FiberPercentageSerializer, FiberSerializer
+    FabricListAndDetailSerializer, FiberPercentageSerializer, FiberSerializer, WeaveSerializer, AppearanceSerializer
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
@@ -472,3 +472,13 @@ class DashboardAPI(RetrieveAPIView):
 class FabricDetailAPI(RetrieveAPIView):
     queryset = Fabric.objects.filter(is_archived=False)
     serializer_class = FabricListAndDetailSerializer
+
+
+class WeaveListAPI(ListAPIView):
+    queryset = Weave.objects.filter(is_archived=False)
+    serializer_class = WeaveSerializer
+
+
+class AppearanceListAPI(ListAPIView):
+    queryset = Appearance.objects.filter(is_archived=False)
+    serializer_class = AppearanceSerializer

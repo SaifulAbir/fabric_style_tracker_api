@@ -38,7 +38,7 @@ class Fiber(FabricSampleTrackerModel):
 
 class FiberPercentage(FabricSampleTrackerModel):
     fiber = models.ForeignKey(Fiber, on_delete=models.PROTECT, db_column='fiber')
-    percentage = models.PositiveIntegerField()
+    percentage = models.DecimalField(max_digits=5, decimal_places=2)
 
     class Meta:
         ordering = ['-created_at']

@@ -1,6 +1,6 @@
 from django.contrib import admin
 from fabric_sample_tracker_api.admin import FabricSampleTrackerAdmin
-from style.models import Style, WashType, Designer
+from style.models import Style, WashType, Designer, Property
 # Register your models here.
 
 
@@ -17,4 +17,9 @@ class WashTypeAdmin(FabricSampleTrackerAdmin):
 
 @admin.register(Designer)
 class DesignerAdmin(FabricSampleTrackerAdmin):
+    list_display = ['name']
+
+
+@admin.register(Property)
+class PropertyAdmin(FabricSampleTrackerAdmin):
     list_display = ['name']

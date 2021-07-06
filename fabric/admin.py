@@ -1,6 +1,6 @@
 from django.contrib import admin
 from fabric.models import Fabric, FabricType, FabricComposition, FabricConstruction, Shrinkage, Fiber, FiberPercentage, \
-    FiberComposition, FabricDetail
+    FiberComposition, FabricDetail, Weave, Appearance
 from fabric_sample_tracker_api.admin import FabricSampleTrackerAdmin
 
 
@@ -55,3 +55,13 @@ class ShrinkageAdmin(FabricSampleTrackerAdmin):
 @admin.register(FabricDetail)
 class FabricDetailAdmin(FabricSampleTrackerAdmin):
     list_display = ['fabric', 'initial_availability', 'used_yds', 'last_availability']
+
+
+@admin.register(Weave)
+class WeaveAdmin(FabricSampleTrackerAdmin):
+    list_display = ['name']
+
+
+@admin.register(Appearance)
+class AppearanceAdmin(FabricSampleTrackerAdmin):
+    list_display = ['name']

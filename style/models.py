@@ -30,7 +30,20 @@ class Designer(FabricSampleTrackerModel):
         ordering = ['-created_at']
         verbose_name = strings_style.DESIGNER_VERBOSE_NAME
         verbose_name_plural = strings_style.DESIGNER_VERBOSE_NAME_PLURAL
-        db_table = 'designer'
+        db_table = 'designers'
+
+    def __str__(self):
+        return self.name
+
+
+class Property(FabricSampleTrackerModel):
+    name = models.CharField(max_length=255, unique=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = strings_style.PROPERTY_VERBOSE_NAME
+        verbose_name_plural = strings_style.PROPERTY_VERBOSE_NAME_PLURAL
+        db_table = 'properties'
 
     def __str__(self):
         return self.name
@@ -40,11 +53,13 @@ class Style(FabricSampleTrackerModel):
     name = models.CharField(max_length=255, unique=True)
     fabric = models.ForeignKey(Fabric, on_delete=models.PROTECT, db_column='fabric')
     fabric_details = models.ForeignKey(FabricDetail, on_delete=models.PROTECT, db_column='fabric_details')
-    wash_type = models.ForeignKey(WashType, on_delete=models.PROTECT, db_column='wash_type')
-    designer = models.ForeignKey(Designer, on_delete=models.PROTECT, db_column='designer')
+    wash_type = models.ForeignKey(WashType, on_delete=models.PROTECT, db_column='wash_types')
+    designer = models.ForeignKey(Designer, on_delete=models.PROTECT, db_column='designers')
+    Property = models.ForeignKey(Property, on_delete=models.PROTECT, db_column='properties')
     fob = models.PositiveIntegerField()
     code = models.CharField(max_length=13, blank=True)
     barcode = models.ImageField(upload_to="images/", blank=True)
+    image = models.ImageField(upload_to="images/", blank=True)
     remark = models.TextField(null=True, blank=True)
 
     class Meta:

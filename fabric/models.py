@@ -113,6 +113,32 @@ class Shrinkage(FabricSampleTrackerModel):
         return "{}, {}".format(self.warp, self.weft)
 
 
+class Weave(FabricSampleTrackerModel):
+    name = models.CharField(max_length=255, unique=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = strings_fabric.WEAVE_VERBOSE_NAME
+        verbose_name_plural = strings_fabric.WEAVE_VERBOSE_NAME_PLURAL
+        db_table = 'weaves'
+
+    def __str__(self):
+        return self.name
+
+
+class Appearance(FabricSampleTrackerModel):
+    name = models.CharField(max_length=255, unique=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        verbose_name = strings_fabric.APPEARANCE_VERBOSE_NAME
+        verbose_name_plural = strings_fabric.APPEARANCE_VERBOSE_NAME_PLURAL
+        db_table = 'appearances'
+
+    def __str__(self):
+        return self.name
+
+
 class Fabric(FabricSampleTrackerModel):
     dekko_reference = models.CharField(max_length=255, unique=True)
     mill_reference = models.CharField(max_length=255, unique=True)
@@ -120,6 +146,8 @@ class Fabric(FabricSampleTrackerModel):
     fabric_type = models.ForeignKey(FabricType, on_delete=models.PROTECT)
     composition = models.ForeignKey(FabricComposition, on_delete=models.PROTECT)
     construction = models.ForeignKey(FabricConstruction, on_delete=models.PROTECT)
+    weave = models.ForeignKey(Weave, on_delete=models.PROTECT)
+    appearance = models.ForeignKey(Appearance, on_delete=models.PROTECT)
     shrinkage = models.ForeignKey(Shrinkage, on_delete=models.PROTECT)
     weight = models.PositiveIntegerField(null=True, blank=True)
     cuttable_width = models.PositiveIntegerField(null=True, blank=True)
@@ -130,6 +158,7 @@ class Fabric(FabricSampleTrackerModel):
     last_availability = models.PositiveIntegerField(null=True, blank=True)
     code = models.CharField(max_length=13, blank=True)
     barcode = models.ImageField(upload_to="images/", blank=True)
+    image = models.ImageField(upload_to="images/", blank=True)
     marketing_tools = models.TextField(null=True, blank=True)
     remark = models.TextField(null=True, blank=True)
 

@@ -42,3 +42,13 @@ SHRINKAGE_VERBOSE_NAME_PLURAL = 'Shrinkage'
 FABRIC_DETAIL_VERBOSE_NAME = 'Fabric Detail'
 FABRIC_DETAIL_VERBOSE_NAME_PLURAL = 'Fabric Details'
 # Fabric Detail Strings#
+
+# Weave Strings#
+WEAVE_VERBOSE_NAME = 'Weave'
+WEAVE_VERBOSE_NAME_PLURAL = 'Weaves'
+# Weave Strings#
+
+# Appearance Strings#
+APPEARANCE_VERBOSE_NAME = 'Appearance'
+APPEARANCE_VERBOSE_NAME_PLURAL = 'Appearances'
+# Weave Strings#

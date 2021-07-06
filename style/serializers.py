@@ -58,6 +58,7 @@ class StyleListSerializer(ModelSerializer):
     fabric_price = serializers.CharField(source='fabric.price')
     fabric_moq = serializers.CharField(source='fabric.moq')
     fabric_lead_time = serializers.CharField(source='fabric.lead_time')
+    fabric_initial_availability = serializers.CharField(source='fabric.initial_availability')
     fabric_last_availability = serializers.CharField(source='fabric.last_availability')
     fabric_marketing_tools = serializers.CharField(source='fabric.marketing_tools')
     wash_type_name = serializers.CharField(source='wash_type.name')
@@ -69,7 +70,7 @@ class StyleListSerializer(ModelSerializer):
         model = Style
         fields = ('id', 'name', 'fabric', 'fabric_dekko_reference', 'used_yds', 'wash_type', 'wash_type_name', 'designer', 'designer_name', 'property', 'property_name','fob', 'remark', 'barcode', 'code',
                   'fabric_mill_reference', 'fabric_supplier', 'fabric_fabric_type', 'fabric_composition', 'fabric_weave', 'fabric_appearance','fabric_construction', 'fabric_shrinkage',
-                  'fabric_weight', 'fabric_cuttable_width', 'fabric_price', 'fabric_moq', 'fabric_lead_time', 'fabric_last_availability', 'fabric_marketing_tools')
+                  'fabric_weight', 'fabric_cuttable_width', 'fabric_price', 'fabric_moq', 'fabric_lead_time', 'fabric_initial_availability', 'fabric_last_availability', 'fabric_marketing_tools')
 
 
 class WashTypeListSerializer(ModelSerializer):

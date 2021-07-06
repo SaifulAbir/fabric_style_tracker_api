@@ -141,7 +141,7 @@ class Appearance(FabricSampleTrackerModel):
 
 class Fabric(FabricSampleTrackerModel):
     dekko_reference = models.CharField(max_length=255, unique=True)
-    mill_reference = models.CharField(max_length=255, unique=True)
+    mill_reference = models.CharField(max_length=255)
     supplier = models.ForeignKey(Supplier, on_delete=models.PROTECT)
     fabric_type = models.ForeignKey(FabricType, on_delete=models.PROTECT)
     composition = models.ForeignKey(FabricComposition, on_delete=models.PROTECT)

@@ -14,7 +14,7 @@ class FabricSerializer(ModelSerializer):
 
     class Meta:
         model = Fabric
-        model_fields = ['dekko_reference', 'mill_reference', 'supplier', 'fabric_type', 'composition',
+        model_fields = ['dekko_reference', 'mill_reference', 'supplier', 'fabric_type', 'composition', 'weave', 'appearance',
                         'construction', 'shrinkage', 'weight', 'cuttable_width', 'price', 'moq', 'lead_time', 'initial_availability', 'marketing_tools', 'remark']
         extra_fields = ['ends_per_inch', 'picks_per_inch', 'warp_count', 'weft_count', 'warp', 'weft']
         fields = model_fields + extra_fields
@@ -45,6 +45,8 @@ class FabricSerializer(ModelSerializer):
 class FabricListAndDetailSerializer(ModelSerializer):
     supplier_name = serializers.CharField(source='supplier.name')
     fabric_type_name = serializers.CharField(source='fabric_type.name')
+    weave_name = serializers.CharField(source='weave.name')
+    appearance_name = serializers.CharField(source='appearance.name')
     ends_per_inch = serializers.CharField(source='construction.ends_per_inch')
     picks_per_inch = serializers.CharField(source='construction.picks_per_inch')
     warp_count = serializers.CharField(source='construction.warp_count')
@@ -53,7 +55,7 @@ class FabricListAndDetailSerializer(ModelSerializer):
     weft = serializers.CharField(source='shrinkage.weft')
     class Meta:
         model = Fabric
-        fields = ('id', 'dekko_reference', 'mill_reference', 'supplier', 'supplier_name', 'fabric_type',
+        fields = ('id', 'dekko_reference', 'mill_reference', 'supplier', 'supplier_name', 'weave', 'weave_name', 'appearance', 'appearance_name', 'fabric_type',
                   'fabric_type_name', 'fabric_composition', 'composition', 'fabric_construction', 'ends_per_inch',
                   'picks_per_inch', 'warp_count', 'weft_count', 'warp', 'weft', 'weight', 'cuttable_width', 'price',
                   'moq', 'lead_time', 'initial_availability', 'last_availability', 'marketing_tools', 'remark', 'barcode', 'code')

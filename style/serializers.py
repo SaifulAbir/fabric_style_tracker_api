@@ -9,11 +9,12 @@ class StyleSerializer(ModelSerializer):
 
     class Meta:
         model = Style
-        model_fields = ['name', 'fabric', 'wash_type', 'designer', 'property', 'fob', 'remark']
+        model_fields = ['name', 'fabric', 'wash_type', 'designer', 'property', 'fob', 'remark', 'image']
         extra_fields = ['used_yds']
         fields = model_fields + extra_fields
 
     def create(self, validated_data):
+        print(validated_data)
         fabric_instance = validated_data.get('fabric')
 
         fabric_initial_availability = fabric_instance.initial_availability
@@ -68,7 +69,7 @@ class StyleListSerializer(ModelSerializer):
 
     class Meta:
         model = Style
-        fields = ('id', 'name', 'fabric', 'fabric_dekko_reference', 'used_yds', 'wash_type', 'wash_type_name', 'designer', 'designer_name', 'property', 'property_name','fob', 'remark', 'barcode', 'code',
+        fields = ('id', 'name', 'fabric', 'fabric_dekko_reference', 'used_yds', 'wash_type', 'wash_type_name', 'designer', 'designer_name', 'property', 'property_name','fob', 'remark', 'barcode', 'code', "image",
                   'fabric_mill_reference', 'fabric_supplier', 'fabric_fabric_type', 'fabric_composition', 'fabric_weave', 'fabric_appearance','fabric_construction', 'fabric_shrinkage',
                   'fabric_weight', 'fabric_cuttable_width', 'fabric_price', 'fabric_moq', 'fabric_lead_time', 'fabric_initial_availability', 'fabric_last_availability', 'fabric_marketing_tools')
 

@@ -2,6 +2,7 @@ from style.models import Style, WashType, Designer, Property
 from style.serializers import StyleSerializer, StyleListSerializer, WashTypeListSerializer, DesignerListSerializer, \
     PropertyListSerializer
 from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 class StyleListAPI(ListAPIView):
@@ -10,10 +11,12 @@ class StyleListAPI(ListAPIView):
 
 
 class StyleCreateAPI(CreateAPIView):
+    parser_classes = [MultiPartParser, FormParser]
     serializer_class = StyleSerializer
 
 
 class StyleUpdateAPI(UpdateAPIView):
+    parser_classes = [MultiPartParser, FormParser]
     queryset = Style.objects.all()
     serializer_class = StyleSerializer
 

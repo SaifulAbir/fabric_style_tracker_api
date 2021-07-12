@@ -18,6 +18,7 @@ from style.models import Style
 from supplier.models import Supplier
 import os
 
+
 class FabricCreateAPI(CreateAPIView):
     serializer_class = FabricSerializer
 
@@ -25,6 +26,7 @@ class FabricCreateAPI(CreateAPIView):
         if Fabric.objects.filter(dekko_reference=request.data["dekko_reference"]).exists():
             request.data["dekko_reference"] = request.data["dekko_reference"] + "-" + str(create_six_digits_unique_number())
         return super(FabricCreateAPI, self).post(request, *args, **kwargs)
+
 
 class DownloadFabricExcelFormat(generics.RetrieveAPIView):
 

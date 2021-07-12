@@ -11,6 +11,8 @@ from fabric.serializers import FabricSerializer, FabricCompositionSerializer, Fa
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK
+
+from fabric.utils import create_six_digits_unique_number
 from fabric_sample_tracker_api.settings import STATIC_DIR
 from style.models import Style
 from supplier.models import Supplier
@@ -18,6 +20,11 @@ import os
 
 class FabricCreateAPI(CreateAPIView):
     serializer_class = FabricSerializer
+
+    def post(self, request, *args, **kwargs):
+        if Fabric.objects.filter(dekko_reference=request.data["dekko_reference"]).exists():
+            request.data["dekko_reference"] = request.data["dekko_reference"] + "-" + str(create_six_digits_unique_number())
+        return super(FabricCreateAPI, self).post(request, *args, **kwargs)
 
 class DownloadFabricExcelFormat(generics.RetrieveAPIView):
 

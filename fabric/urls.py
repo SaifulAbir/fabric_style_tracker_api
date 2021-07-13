@@ -3,7 +3,7 @@ from fabric.api import FabricCreateAPI, FabricListAPI, FabricCompositionListAPI,
     FabricUpdateAPI, FabricTypeCreateAPI, FabricTypeUpdateAPI, FabricCompositionCreateAPI, FiberPercentageListAPI, \
     FiberPercentageCreateAPI, FiberPercentageUpdateAPI, FiberListAPI, FabricCompositionUpdateAPI, FiberCreateAPI, \
     FiberUpdateAPI, FabricCreateFromExcelAPI, DownloadFabricExcelFormat, DashboardAPI, FabricDetailAPI, \
-    AppearanceListAPI, WeaveListAPI
+    AppearanceListAPI, WeaveListAPI, WeaveUpdateAPI, AppearanceUpdateAPI, AppearanceCreateAPI, WeaveCreateAPI
 
 urlpatterns = [
     path('fabric/create/', FabricCreateAPI.as_view()),
@@ -25,6 +25,10 @@ urlpatterns = [
     path('fiber_percentage/create/', FiberPercentageCreateAPI.as_view()),
     path('fiber_percentage/update/<str:pk>/', FiberPercentageUpdateAPI.as_view()),
     path('dashboard/', DashboardAPI.as_view()),
+    path('weave/create/', WeaveCreateAPI.as_view()),
+    path('weave/update/<str:pk>/', WeaveUpdateAPI.as_view()),
     path('weave/list/', WeaveListAPI.as_view()),
+    path('appearance/create/', AppearanceCreateAPI.as_view()),
+    path('appearance/update/<str:pk>/', AppearanceUpdateAPI.as_view()),
     path('appearance/list/', AppearanceListAPI.as_view()),
 ]

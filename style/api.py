@@ -21,14 +21,41 @@ class StyleUpdateAPI(UpdateAPIView):
     serializer_class = StyleSerializer
 
 
+class WashTypeCreateAPI(CreateAPIView):
+    serializer_class = WashTypeListSerializer
+
+
+class WashTypeUpdateAPI(UpdateAPIView):
+    queryset = WashType.objects.all()
+    serializer_class = WashTypeListSerializer
+
+
 class WashTypeListAPI(ListAPIView):
     queryset = WashType.objects.filter(is_archived=False)
     serializer_class = WashTypeListSerializer
 
 
+class DesignerCreateAPI(CreateAPIView):
+    serializer_class = DesignerListSerializer
+
+
+class DesignerUpdateAPI(UpdateAPIView):
+    queryset = Designer.objects.all()
+    serializer_class = DesignerListSerializer
+
+
 class DesignerListAPI(ListAPIView):
     queryset = Designer.objects.filter(is_archived=False)
     serializer_class = DesignerListSerializer
+
+
+class PropertyCreateAPI(CreateAPIView):
+    serializer_class = PropertyListSerializer
+
+
+class PropertyUpdateAPI(UpdateAPIView):
+    queryset = Property.objects.all()
+    serializer_class = PropertyListSerializer
 
 
 class PropertyListAPI(ListAPIView):

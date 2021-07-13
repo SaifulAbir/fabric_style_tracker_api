@@ -479,8 +479,26 @@ class FabricDetailAPI(RetrieveAPIView):
     serializer_class = FabricListAndDetailSerializer
 
 
+class WeaveCreateAPI(CreateAPIView):
+    serializer_class = WeaveSerializer
+
+
+class WeaveUpdateAPI(UpdateAPIView):
+    queryset = Weave.objects.all()
+    serializer_class = WeaveSerializer
+
+
 class WeaveListAPI(ListAPIView):
     queryset = Weave.objects.filter(is_archived=False)
+    serializer_class = WeaveSerializer
+
+
+class AppearanceCreateAPI(CreateAPIView):
+    serializer_class = AppearanceSerializer
+
+
+class AppearanceUpdateAPI(UpdateAPIView):
+    queryset = Appearance.objects.all()
     serializer_class = WeaveSerializer
 
 

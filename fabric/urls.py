@@ -3,7 +3,8 @@ from fabric.api import FabricCreateAPI, FabricListAPI, FabricCompositionListAPI,
     FabricUpdateAPI, FabricTypeCreateAPI, FabricTypeUpdateAPI, FabricCompositionCreateAPI, FiberPercentageListAPI, \
     FiberPercentageCreateAPI, FiberPercentageUpdateAPI, FiberListAPI, FabricCompositionUpdateAPI, FiberCreateAPI, \
     FiberUpdateAPI, FabricCreateFromExcelAPI, DownloadFabricExcelFormat, DashboardAPI, FabricDetailAPI, \
-    AppearanceListAPI, WeaveListAPI, WeaveUpdateAPI, AppearanceUpdateAPI, AppearanceCreateAPI, WeaveCreateAPI
+    AppearanceListAPI, WeaveListAPI, WeaveUpdateAPI, AppearanceUpdateAPI, AppearanceCreateAPI, WeaveCreateAPI, \
+    FabricMillAndDekkoReferenceListAPI
 
 urlpatterns = [
     path('fabric/create/', FabricCreateAPI.as_view()),
@@ -15,6 +16,7 @@ urlpatterns = [
     path('fabric_composition/create/', FabricCompositionCreateAPI.as_view()),
     path('fabric_composition/update/<str:pk>/', FabricCompositionUpdateAPI.as_view()),
     path('fabric/list/', FabricListAPI.as_view()),
+    path('fabric_mill_and_dekko_reference/list/', FabricMillAndDekkoReferenceListAPI.as_view()),
     path('fabric/get/<str:pk>/', FabricDetailAPI.as_view()),
     path('fabric_composition/list/', FabricCompositionListAPI.as_view()),
     path('fabric_type/list/', FabricTypeListAPI.as_view()),

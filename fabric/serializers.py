@@ -61,6 +61,12 @@ class FabricListAndDetailSerializer(ModelSerializer):
                   'moq', 'lead_time', 'initial_availability', 'last_availability', 'marketing_tools', 'remark', 'barcode', 'code')
 
 
+class FabricMillAndDekkoReferenceSerializer(ModelSerializer):
+    class Meta:
+        model = Fabric
+        fields = ('id', 'dekko_reference', 'mill_reference')
+
+
 class FiberPercentageSerializer(ModelSerializer):
     class Meta:
         model = FiberPercentage

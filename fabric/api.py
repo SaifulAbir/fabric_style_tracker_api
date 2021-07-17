@@ -223,6 +223,35 @@ class FabricListAPI(ListAPIView):
     serializer_class = FabricListAndDetailSerializer
 
 
+class FabricSearchAPI(ListAPIView):
+    serializer_class = FabricListAndDetailSerializer
+
+    def get_queryset(self):
+        # data = self.request.data
+        # # print(request.data)
+        # from_date = data['from_date']
+        # to_date = data['to_date']
+        # mill_reference = data['mill_reference']
+        # dekko_reference = data['dekko_reference']
+        # supplier = data['supplier']
+        # fabric_type = data['fabric_type']
+        # composition = data['composition']
+        # weave = data['weave']
+        # appearance = data['appearance']
+        request = self.request
+        print(request.data)
+        query = request.GET.get('mill_reference')
+        print(query)
+
+        queryset = Fabric.objects.filter(
+            is_archived=False, mill_reference=query
+        )
+        print(queryset)
+
+        # print(from_date,to_date,mill_reference,dekko_reference, supplier, fabric_type, composition, weave, appearance)
+        return queryset
+
+
 class FabricMillAndDekkoReferenceListAPI(ListAPIView):
     queryset = Fabric.objects.filter(
         is_archived=False

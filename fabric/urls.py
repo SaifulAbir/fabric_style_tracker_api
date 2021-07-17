@@ -4,12 +4,13 @@ from fabric.api import FabricCreateAPI, FabricListAPI, FabricCompositionListAPI,
     FiberPercentageCreateAPI, FiberPercentageUpdateAPI, FiberListAPI, FabricCompositionUpdateAPI, FiberCreateAPI, \
     FiberUpdateAPI, FabricCreateFromExcelAPI, DownloadFabricExcelFormat, DashboardAPI, FabricDetailAPI, \
     AppearanceListAPI, WeaveListAPI, WeaveUpdateAPI, AppearanceUpdateAPI, AppearanceCreateAPI, WeaveCreateAPI, \
-    FabricMillAndDekkoReferenceListAPI
+    FabricMillAndDekkoReferenceListAPI, FabricSearchAPI
 
 urlpatterns = [
     path('fabric/create/', FabricCreateAPI.as_view()),
     path('fabric/create_from_excel/', FabricCreateFromExcelAPI),
     path('fabric/fabric_excel_format/', DownloadFabricExcelFormat.as_view()),
+    path('fabric/search/', FabricSearchAPI.as_view()),
     path('fabric/update/<str:pk>/', FabricUpdateAPI.as_view()),
     path('fabric_type/create/', FabricTypeCreateAPI.as_view()),
     path('fabric_type/update/<str:pk>/', FabricTypeUpdateAPI.as_view()),

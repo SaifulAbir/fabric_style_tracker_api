@@ -58,7 +58,7 @@ class FabricListAndDetailSerializer(ModelSerializer):
         fields = ('id', 'dekko_reference', 'mill_reference', 'supplier', 'supplier_name', 'weave', 'weave_name', 'appearance', 'appearance_name', 'fabric_type',
                   'fabric_type_name', 'fabric_composition', 'composition', 'fabric_construction', 'ends_per_inch',
                   'picks_per_inch', 'warp_count', 'weft_count', 'warp', 'weft', 'weight', 'cuttable_width', 'price',
-                  'moq', 'lead_time', 'initial_availability', 'last_availability', 'marketing_tools', 'remark', 'barcode', 'code')
+                  'moq', 'lead_time', 'initial_availability', 'last_availability', 'marketing_tools', 'remark', 'barcode', 'code', 'shrinkage')
 
 
 class FabricMillAndDekkoReferenceSerializer(ModelSerializer):

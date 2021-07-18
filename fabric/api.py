@@ -227,28 +227,37 @@ class FabricSearchAPI(ListAPIView):
     serializer_class = FabricListAndDetailSerializer
 
     def get_queryset(self):
-        # data = self.request.data
-        # # print(request.data)
-        # from_date = data['from_date']
-        # to_date = data['to_date']
-        # mill_reference = data['mill_reference']
-        # dekko_reference = data['dekko_reference']
-        # supplier = data['supplier']
-        # fabric_type = data['fabric_type']
-        # composition = data['composition']
-        # weave = data['weave']
-        # appearance = data['appearance']
         request = self.request
-        print(request.data)
-        query = request.GET.get('mill_reference')
-        print(query)
+        from_date = request.GET.get('from_date')
+        to_date = request.GET.get('to_date')
+        mill_reference = request.GET.get('mill_reference')
+        dekko_reference = request.GET.get('dekko_reference')
+        supplier = request.GET.get('supplier')
+        fabric_type = request.GET.get('fabric_type')
+        weave = request.GET.get('weave')
+        appearance = request.GET.get('appearance')
 
-        queryset = Fabric.objects.filter(
-            is_archived=False, mill_reference=query
-        )
-        print(queryset)
+        if from_date and to_date:
+            queryset = Fabric.objects.filter(is_archived=False, created_at__gte=from_date,
+                              created_at__lte=to_date)
+        else:
+            this_month = datetime.datetime.today()
+            previous_month = this_month - relativedelta(months=1)
+            queryset = Fabric.objects.filter(is_archived=False, created_at__gte=previous_month,
+                                  created_at__lt=this_month)
+        if mill_reference:
+            queryset = queryset.filter(mill_reference=mill_reference)
+        if dekko_reference:
+            queryset = queryset.filter(dekko_reference=dekko_reference)
+        if supplier:
+            queryset = queryset.filter(supplier__name=supplier)
+        if fabric_type:
+            queryset = queryset.filter(fabric_type__name=fabric_type)
+        if weave:
+            queryset = queryset.filter(weave__name=weave)
+        if appearance:
+            queryset = queryset.filter(appearance__name=appearance)
 
-        # print(from_date,to_date,mill_reference,dekko_reference, supplier, fabric_type, composition, weave, appearance)
         return queryset
 
 

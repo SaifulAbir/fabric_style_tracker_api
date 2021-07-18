@@ -53,9 +53,10 @@ class FabricListAndDetailSerializer(ModelSerializer):
     weft_count = serializers.CharField(source='construction.weft_count')
     warp = serializers.CharField(source='shrinkage.warp')
     weft = serializers.CharField(source='shrinkage.weft')
+    # created = serializers.DateTimeField(source="created_at")
     class Meta:
         model = Fabric
-        fields = ('id', 'dekko_reference', 'mill_reference', 'supplier', 'supplier_name', 'weave', 'weave_name', 'appearance', 'appearance_name', 'fabric_type',
+        fields = ('id', 'created_at', 'dekko_reference', 'mill_reference', 'supplier', 'supplier_name', 'weave', 'weave_name', 'appearance', 'appearance_name', 'fabric_type',
                   'fabric_type_name', 'fabric_composition', 'composition', 'fabric_construction', 'ends_per_inch',
                   'picks_per_inch', 'warp_count', 'weft_count', 'warp', 'weft', 'weight', 'cuttable_width', 'price',
                   'moq', 'lead_time', 'initial_availability', 'last_availability', 'marketing_tools', 'remark', 'barcode', 'code', 'shrinkage')

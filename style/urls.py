@@ -1,11 +1,14 @@
 from django.urls import path
 from style.api import StyleListAPI, StyleCreateAPI, StyleUpdateAPI, WashTypeListAPI, DesignerListAPI, PropertyListAPI, \
-    WashTypeCreateAPI, WashTypeUpdateAPI, DesignerCreateAPI, DesignerUpdateAPI, PropertyCreateAPI, PropertyUpdateAPI
+    WashTypeCreateAPI, WashTypeUpdateAPI, DesignerCreateAPI, DesignerUpdateAPI, PropertyCreateAPI, PropertyUpdateAPI, \
+    StyleNameListAPI, StyleSearchAPI
 
 urlpatterns = [
     path('style/list/', StyleListAPI.as_view()),
+    path('style/name/list/', StyleNameListAPI.as_view()),
     path('style/create/', StyleCreateAPI.as_view()),
     path('style/update/<str:pk>/', StyleUpdateAPI.as_view()),
+    path('style/search/', StyleSearchAPI.as_view()),
     path('wash_type/create/', WashTypeCreateAPI.as_view()),
     path('wash_type/update/<str:pk>/', WashTypeUpdateAPI.as_view()),
     path('wash_type/list/', WashTypeListAPI.as_view()),

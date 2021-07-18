@@ -71,8 +71,14 @@ class StyleListSerializer(ModelSerializer):
         fields = ('id', 'name', 'fabric', 'fabric_dekko_reference', 'used_yds', 'wash_type', 'wash_type_name',
                   'designer', 'designer_name', 'property', 'property_name','fob', 'remark', 'barcode', 'code', "image",
                   'fabric_mill_reference', 'fabric_supplier', 'fabric_fabric_type', 'fabric_composition', 'fabric_weave',
-                  'fabric_appearance','fabric_construction', 'fabric_shrinkage', 'fabric_weight', 'fabric_cuttable_width',
+                  'fabric_appearance','fabric_construction', 'fabric_shrinkage', 'fabric_weight', 'fabric_cuttable_width', 'created_at',
                   'fabric_price', 'fabric_moq', 'fabric_lead_time', 'fabric_initial_availability', 'fabric_last_availability', 'fabric_marketing_tools')
+
+
+class StyleNameListSerializer(ModelSerializer):
+    class Meta:
+        model = Style
+        fields = ['id', 'name']
 
 
 class WashTypeListSerializer(ModelSerializer):
